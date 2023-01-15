@@ -1,0 +1,96 @@
+service: ui-service
+# app and org for use with dashboard.serverless.com
+app: simple-image-recognition-service
+org: YeonwooSung
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+frameworkVersion: '3'
+
+plugins:
+  - serverless-domain-manager
+
+# you can define service wide environment variables here
+environment:
+  SIRS_BUCKET_NAME: myBucketName
+  SIRS_DOMAIN: myDomain
+  SIRS_DOMAIN_ARN: myDomainARN
+
+
+custom:
+  bucket: ${env:SIRS_BUCKET_NAME}
+  crawlerqueue: CrawlerQueue
+  region: ${env:AWS_DEFAULT_REGION, 'ap-northeast-2'}
+  domain: ${env:SIRS_DOMAIN}
+  accountid: ${env:AWS_ACCOUNT_ID}
+  customDomain:
+    domainName: 'api.${self:custom.domain}'
+    stage: dev
+    basePath: api
+    certificateName: '*.${self:custom.domain}'
+    certificaterArn: '${env:SIRS_DOMAIN_ARN}'
+    createRoute53Record: true
+    endpointType: regional
+
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: ${env:AWS_DEFAULT_REGION, 'ap-northeast-2'}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:PutObject
+        - s3:GetObject
+      Resource: "arn:aws:s3:::${self:custom.bucket}/*"
+    - Effect: Allow
+      Action:
+        - sqs:SendMessage
+        - sqs:DeleteMessage
+        - sqs:GetQueueUrl
+      Resource: "arn:aws:sqs:*:*:${self:custom.crawlerqueue}"
+    - Effect: Allow
+      Action:
+        - sqs:ListQueues
+      Resource: "arn:aws:sqs:::*"
+
+
+# you can add packaging information here
+package:
+ patterns:
+   - '!node_modules/**'
+   - handler.js
+   - package.json
+
+
+functions:
+  analyzeUrl:
+    handler: handler.analyzeUrl
+    environment:
+      BUCKET: ${self:custom.bucket}
+      QUEUE: ${self:custom.crawlerqueue}
+      REGION: ${self:custom.region}
+      ACCOUNTID: ${self:custom.accountid}
+    events:
+      - http:
+          path: url/analyze
+          method: post
+          cors: true
+  listUrls:
+    handler: handler.listUrls
+    environment:
+      BUCKET: ${self:custom.bucket}
+    events:
+      - http:
+          path: url/list
+          method: get
+          cors: true
+  listImages:
+    handler: handler.listImages
+    environment:
+      BUCKET: ${self:custom.bucket}
+    events:
+      - http:
+          path: image/list
+          method: get
+          cors: true
