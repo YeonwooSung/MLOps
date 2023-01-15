@@ -18,6 +18,31 @@ Before deploying this service, you should have the following:
     c) [ui-service/serverless.yml](./ui-service/serverless.yml)
 8) Open [frontend-service/app/code.js](./frontend-service/app/code.js) and set the proper values to BUCKET_ROOT and API_ROOT.
 
+## Deploy and remove
+
+If your AWS account is setup and and you have configured the following environment variables in your shell:
+
+```sh
+AWS_ACCOUNT_ID
+AWS_DEFAULT_REGION
+AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY
+SIRS_BUCKET
+SIRS_DOMAIN
+```
+
+Then the system can be deployed using:
+
+```
+$ bash ./deploy.sh
+```
+
+The system can be reomved using:
+
+```
+$ bash ./remove.sh
+```
+
 ## Components
 
 This service consists of the following components:
