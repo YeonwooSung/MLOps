@@ -38,9 +38,10 @@ function analyzeImageLabels (imageBucketKey) {
 
 function writeAnalysis (domain, labels, wcList) {
     return new Promise((resolve) => {
+        let s3_obj_key = domain + '/status.json'
         var params = {
             Bucket: BUCKET_NAME,
-            Key: domain + '/status.json'
+            Key: s3_obj_key
         }
 
         s3.getObject(params, (err, data) => {
@@ -50,10 +51,9 @@ function writeAnalysis (domain, labels, wcList) {
             statFile.analysisResults = labels
             statFile.wordCloudList = wcList
             statFile.stat = 'analyzed'
-            let put_obj_key = domain + '/status.json'
             s3.putObject({
                 Bucket: BUCKET_NAME, 
-                Key: put_obj_key, 
+                Key: s3_obj_key, 
                 Body: Buffer.from(JSON.stringify(statFile, null, 2), 'utf8')
             }, (err, data) => {
                 resolve({stat: err || 'ok'})
@@ -109,7 +109,8 @@ function iterateBucket (domain) {
 
             // use promise to analyze all images in the S3 bucket
             Promise.all(promises).then(results => {
-                writeAnalysis(domain, results, wordCloudList(results)).then(result => {
+                writeAnalysis(domain, results, wordCloudList(results))
+                .then(result => {
                     resolve({statusCode: 200, body: JSON.stringify(result)})
                 })
             })
@@ -137,7 +138,7 @@ module.exports.analyzeImages = function (event, context, cb) {
             asnCb()
         }
     }, (err) => {
-        if (err) { console.log(err) }
+        if (err) console.log(err)
         cb()
     })
 }
