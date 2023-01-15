@@ -1,0 +1,66 @@
+service: crawler-service
+# app and org for use with dashboard.serverless.com
+app: crawler-service
+org: YeonwooSung
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+frameworkVersion: '3'
+
+# you can define service wide environment variables here
+environment:
+  SIRS_BUCKET_NAME: myBucketName
+
+custom:
+  bucket: ${env:SIRS_BUCKET_NAME}
+  crawlerqueue: Chap2CrawlerQueue
+  analysisqueue: Chap2AnalysisQueue
+  region: ${env:AWS_DEFAULT_REGION, 'ap-northeast-2'}
+  accountid: ${env:AWS_ACCOUNT_ID}
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: dev
+  region: ${env:AWS_DEFAULT_REGION, 'ap-northeast-2'}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:PutObject
+      Resource: "arn:aws:s3:::${self:custom.bucket}/*"
+    - Effect: Allow
+      Action:
+        - sqs:ListQueues
+      Resource: "arn:aws:sqs:${self:provider.region}:*:*"
+    - Effect: Allow
+      Action:
+        - sqs:ReceiveMessage
+        - sqs:DeleteMessage
+        - sqs:GetQueueUrl
+      Resource: "arn:aws:sqs:*:*:${self:custom.crawlerqueue}"
+    - Effect: Allow
+      Action:
+        - sqs:SendMessage
+        - sqs:DeleteMessage
+        - sqs:GetQueueUrl
+      Resource: "arn:aws:sqs:*:*:${self:custom.analysisqueue}"
+
+
+package:
+ patterns:
+   - '!node_modules/**'
+   - handler.js
+   - images.js
+   - package.json
+
+functions:
+  crawlImages:
+    handler: handler.crawlImages
+    environment:
+      BUCKET: ${self:custom.bucket}
+      ANALYSIS_QUEUE: ${self:custom.analysisqueue}
+      REGION: ${self:custom.region}
+      ACCOUNTID: ${self:custom.accountid}
+    events:
+      - sqs:
+          arn: "arn:aws:sqs:${self:provider.region}:${env:AWS_ACCOUNT_ID}:${self:custom.crawlerqueue}"
