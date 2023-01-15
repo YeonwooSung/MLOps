@@ -1,0 +1,65 @@
+service: analysis-service
+# app and org for use with dashboard.serverless.com
+app: analysis-service
+org: YeonwooSung
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+frameworkVersion: '3'
+
+# you can define service wide environment variables here
+environment:
+  SIRS_BUCKET_NAME: myBucketName
+
+custom:
+  bucket: ${env:SIRS_BUCKET_NAME}
+  analysisqueue: Chap2AnalysisQueue
+  region: ${env:AWS_DEFAULT_REGION, 'ap-northeast-2'}
+  accountid: ${env:AWS_ACCOUNT_ID}
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: ${env:AWS_DEFAULT_REGION, 'ap-northeast-2'}
+  memorySize: 512
+  timeout: 10
+  stage: dev
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:*
+      Resource: "*"
+    - Effect: "Allow"
+      Action:
+        - "rekognition:*"
+      Resource: "*"
+    - Effect: Allow
+      Action:
+        - sqs:ListQueues
+      Resource: "arn:aws:sqs:${self:provider.region}::*"
+    - Effect: Allow
+      Action:
+        - sqs:ReceiveMessage
+        - sqs:DeleteMessage
+        - sqs:GetQueueUrl
+      Resource: "arn:aws:sqs:*:*:${self:custom.analysisqueue}"
+
+
+# you can add packaging information here
+package:
+ patterns:
+   - '!node_modules/**'
+   - handler.js
+   - package.json
+
+
+functions:
+  analyzeImages:
+    handler: handler.analyzeImages
+    environment:
+      BUCKET: ${self:custom.bucket}
+      REGION: ${self:custom.region}
+      ACCOUNTID: ${self:custom.accountid}
+    events:
+      - sqs:
+          arn: "arn:aws:sqs:${self:provider.region}:${env:AWS_ACCOUNT_ID}:${self:custom.analysisqueue}"
