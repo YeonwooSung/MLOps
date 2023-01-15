@@ -9,6 +9,7 @@ This service consists of the following components:
 1. [Image crawler](./crawler-service/)
 2. [Analysis service](./analysis-service/)
 3. [UI service](./ui-service/)
+4. [Frontend service](./frontend-service/)
 
 ### Crawler service
 
