@@ -14,7 +14,6 @@ plugins:
 environment:
   SIRS_BUCKET_NAME: myBucketName
   SIRS_DOMAIN: myDomain
-  SIRS_DOMAIN_ARN: myDomainARN
 
 
 custom:
@@ -28,7 +27,6 @@ custom:
     stage: dev
     basePath: api
     certificateName: '*.${self:custom.domain}'
-    certificaterArn: '${env:SIRS_DOMAIN_ARN}'
     createRoute53Record: true
     endpointType: regional
 
