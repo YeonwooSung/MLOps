@@ -35,3 +35,13 @@ These variables could be found in [./ui-service/serverless.yml file](./ui-servic
 After setting proper values to the variables in the environment section, you could deploy the service successfully.
 
 Also, deploying this service requires the "APIGatewayAdministrator" policy to be attached to the IAM role that is used for deployment.
+
+### Frontend service
+
+The frontend part of the entire service.
+It is simply consisted with pure HTML, CSS, and JavaScript files.
+Thus, unlike other microservices in this application, this service is not implemented with serverless framework, but directly deployed to the S3 bucket.
+
+Since this service requries neither complex logics nor awesome UX functionalities, it is implemented with simple HTML, CSS, and JavaScript files.
+Frameworks or libraries such as React, Vue, or Angular are not necessary for this service.
+Always, simple is the best!
