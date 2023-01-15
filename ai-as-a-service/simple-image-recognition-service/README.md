@@ -2,6 +2,22 @@
 
 This service provides a simple image recognition to users.
 
+## Pre-requisites
+
+Before deploying this service, you should have the following:
+
+1) Set up AWS account, and configure AWS CLI with your credentials.
+2) Install serverless framework.
+3) Install node.js and npm.
+4) Set up S3 bucket and SQS queue.
+5) Set up AWS Rekognition service.
+6) Set up a domain name and a certificate for the domain name.
+7) Set suitable values to the environment variables in the serverless.yml in each service directory.
+    a) [crawler-service/serverless.yml](./crawler-service/serverless.yml)
+    b) [analysis-service/serverless.yml](./analysis-service/serverless.yml)
+    c) [ui-service/serverless.yml](./ui-service/serverless.yml)
+8) Open [frontend-service/app/code.js](./frontend-service/app/code.js) and set the proper values to BUCKET_ROOT and API_ROOT.
+
 ## Components
 
 This service consists of the following components:
