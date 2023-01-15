@@ -1,93 +1,60 @@
 'use strict'
 
+const request = require('request')
+const urlParser = require('url')
+const URLSearchParams = require('url').URLSearchParams
+const shortid = require('shortid')
 const asnc = require('async')
 const AWS = require('aws-sdk')
 const s3 = new AWS.S3()
-const rek = new AWS.Rekognition()
+const sqs = new AWS.SQS({region: process.env.REGION})
+const images = require('./images')()
 
 
-function analyzeImageLabels (imageBucketKey) {
-    const params = {
-        Image: {
-        S3Object: {
-            Bucket: process.env.BUCKET,
-            Name: imageBucketKey
-        }
-        },
-        MaxLabels: 10,
-        MinConfidence: 80
+function writeStatus (url, domain, results) {
+    let parsed = urlParser.parse(url)
+    parsed.hostname = domain
+    parsed.host = domain
+    const statFile = {
+        url: urlParser.format(parsed),
+        stat: 'downloaded',
+        downloadResults: results
     }
-    return new Promise((resolve, reject) => {
-        rek.detectLabels(params, (err, data) => {
-        if (err) { return resolve({image: imageBucketKey, labels: [], err: err}) }
-        return resolve({image: imageBucketKey, labels: data.Labels})
-        })
-    })
-}
 
-
-function writeAnalysis (domain, labels, wcList) {
     return new Promise((resolve) => {
-        var params = {
-        Bucket: process.env.BUCKET,
-        Key: domain + '/status.json'
-        }
-
-        s3.getObject(params, (err, data) => {
-        if (err) { return resolve({stat: err}) }
-        let statFile = JSON.parse(data.Body.toString())
-        statFile.analysisResults = labels
-        statFile.wordCloudList = wcList
-        statFile.stat = 'analyzed'
         s3.putObject({Bucket: process.env.BUCKET, Key: domain + '/status.json', Body: Buffer.from(JSON.stringify(statFile, null, 2), 'utf8')}, (err, data) => {
-            resolve({stat: err || 'ok'})
-        })
+        resolve({stat: err || 'ok'})
         })
     })
 }
 
 
-function wordCloudList (labels) {
-    let counts = {}
-    let wcList = []
-
-    labels.forEach(set => {
-        set.labels.forEach(lab => {
-        if (!counts[lab.Name]) {
-            counts[lab.Name] = 1
-        } else {
-            counts[lab.Name] = counts[lab.Name] + 1
-        }
-        })
-    })
-
-    Object.keys(counts).forEach(key => {
-        wcList.push([key, counts[key]])
-    })
-    return wcList
-}
+function createUniqueDomain (url) {
+    const parsed = urlParser.parse(url)
+    const sp = new URLSearchParams(parsed.search)
+    let domain
 
 
-function iterateBucket (domain) {
-    let promises = []
-    const params = {
-        Bucket: process.env.BUCKET,
-        Prefix: domain,
-        MaxKeys: 1000
+    if (sp.get('q')) {
+        domain = sp.get('q') + '.' + parsed.hostname
+    } else {
+        domain = shortid.generate() + '.' + parsed.hostname
     }
+    domain = domain.replace(/ /g, '')
+    return domain.toLowerCase()
+}
 
+
+function crawl (domain, url, context) {
+    console.log('crawling: ' + url)
     return new Promise(resolve => {
-        s3.listObjectsV2(params, (err, data) => {
-        if (err) { return resolve({statusCode: 500, body: JSON.stringify(err)}) }
-        data.Contents.forEach(imageFile => {
-            if (imageFile.Key !== domain + '/status.json') {
-            promises.push(analyzeImageLabels(imageFile.Key))
-            }
-        })
-
-        Promise.all(promises).then(results => {
-            writeAnalysis(domain, results, wordCloudList(results)).then(result => {
-            resolve({statusCode: 200, body: JSON.stringify(result)})
+        request(url, (err, response, body) => {
+        if (err || response.statusCode !== 200) { return resolve({statusCode: 500, body: err}) }
+        images.parseImageUrls(body, url).then(urls => {
+            images.fetchImages(urls, domain).then(results => {
+            writeStatus(url, domain, results).then(result => {
+                resolve({statusCode: 200, body: JSON.stringify(result)})
+            })
             })
         })
         })
@@ -95,7 +62,29 @@ function iterateBucket (domain) {
 }
 
 
-module.exports.analyzeImages = function (event, context, cb) {
+function queueAnalysis (domain, url, context) {
+    let accountId = process.env.ACCOUNTID
+    if (!accountId) {
+        accountId = context.invokedFunctionArn.split(':')[4]
+    }
+    let queueUrl = `https://sqs.${process.env.REGION}.amazonaws.com/${accountId}/${process.env.ANALYSIS_QUEUE}`
+
+    let params = {
+        MessageBody: JSON.stringify({action: 'analyze', msg: {domain: domain}}),
+        QueueUrl: queueUrl
+    }
+
+    return new Promise(resolve => {
+        sqs.sendMessage(params, (err, data) => {
+        if (err) { console.log('QUEUE ERROR: ' + err); return resolve({statusCode: 500, body: err}) }
+        console.log('queued analysis: ' + queueUrl)
+        resolve({statusCode: 200, body: {queue: queueUrl, msgId: data.MessageId}})
+        })
+    })
+}
+
+
+module.exports.crawlImages = function (event, context, cb) {
     asnc.eachSeries(event.Records, (record, asnCb) => {
         let { body } = record
 
@@ -105,12 +94,15 @@ module.exports.analyzeImages = function (event, context, cb) {
         return asnCb('message parse error: ' + record)
         }
 
-        if (body.action === 'analyze' && body.msg && body.msg.domain) {
-        iterateBucket(body.msg.domain, context).then(result => {
+        if (body.action === 'download' && body.msg && body.msg.url) {
+        const udomain = createUniqueDomain(body.msg.url)
+        crawl(udomain, body.msg.url, context).then(result => {
+            queueAnalysis(udomain, body.msg.url, context).then(result => {
             asnCb(null, result)
+            })
         })
         } else {
-        asnCb()
+        asnCb('malformed message')
         }
     }, (err) => {
         if (err) { console.log(err) }
