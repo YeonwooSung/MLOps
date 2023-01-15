@@ -1,6 +1,6 @@
 service: crawler-service
 # app and org for use with dashboard.serverless.com
-app: crawler-service
+app: simple-image-recognition-service
 org: YeonwooSung
 
 # You can pin your service to only deploy with a specific Serverless version
@@ -13,8 +13,8 @@ environment:
 
 custom:
   bucket: ${env:SIRS_BUCKET_NAME}
-  crawlerqueue: Chap2CrawlerQueue
-  analysisqueue: Chap2AnalysisQueue
+  crawlerqueue: CrawlerQueue
+  analysisqueue: AnalysisQueue
   region: ${env:AWS_DEFAULT_REGION, 'ap-northeast-2'}
   accountid: ${env:AWS_ACCOUNT_ID}
 

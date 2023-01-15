@@ -1,6 +1,6 @@
 service: analysis-service
 # app and org for use with dashboard.serverless.com
-app: analysis-service
+app: simple-image-recognition-service
 org: YeonwooSung
 
 # You can pin your service to only deploy with a specific Serverless version
@@ -13,7 +13,7 @@ environment:
 
 custom:
   bucket: ${env:SIRS_BUCKET_NAME}
-  analysisqueue: Chap2AnalysisQueue
+  analysisqueue: AnalysisQueue
   region: ${env:AWS_DEFAULT_REGION, 'ap-northeast-2'}
   accountid: ${env:AWS_ACCOUNT_ID}
 
