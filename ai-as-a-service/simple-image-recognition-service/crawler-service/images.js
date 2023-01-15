@@ -6,6 +6,7 @@ const AWS = require('aws-sdk')
 const s3 = new AWS.S3()
 const uuid = require('uuid/v1')
 
+const BUCKET_NAME = process.env.BUCKET
 
 module.exports = function () {
 
@@ -40,22 +41,23 @@ module.exports = function () {
 
     function fetchImage (imageUrl, id, domain) {
         return new Promise((resolve, reject) => {
-        console.log('fetching: ' + imageUrl)
-        request.head(imageUrl, (err, response, body) => {
-            console.log('fetching: ' + response)
-            if (err || response.statusCode !== 200) { return resolve({url: imageUrl, stat: response.statusCode, err: err}) }
+            console.log('fetching: ' + imageUrl)
+            request.head(imageUrl, (err, response, body) => {
+                console.log('fetching: ' + response)
+                if (err || response.statusCode !== 200) return resolve({url: imageUrl, stat: response.statusCode, err: err})
 
-            request({url: imageUrl, encoding: null}, (err, response, buffer) => {
-            console.log('fetching: ' + response.statusCode)
-            if (err || response.statusCode !== 200) { return resolve({url: imageUrl, stat: response.statusCode, err: err}) }
+                request({url: imageUrl, encoding: null}, (err, response, buffer) => {
+                    console.log('fetching: ' + response.statusCode)
+                    if (err || response.statusCode !== 200) return resolve({url: imageUrl, stat: response.statusCode, err: err})
 
-            const fileName = uuid()
-            s3.putObject({Bucket: process.env.BUCKET, Key: domain + '/' + fileName, Body: buffer}, (err, data) => {
-                console.log('writing: ' + imageUrl)
-                resolve({url: imageUrl, stat: err || 'ok'})
+                    const fileName = uuid()
+                    let put_obj_key = domain + '/' + fileName
+                    s3.putObject({Bucket: BUCKET_NAME, Key: put_obj_key, Body: buffer}, (err, data) => {
+                        console.log('writing: ' + imageUrl)
+                        resolve({url: imageUrl, stat: err || 'ok'})
+                    })
+                })
             })
-            })
-        })
         })
     }
 
@@ -65,34 +67,39 @@ module.exports = function () {
         const data = spl[1]
 
         return new Promise((resolve, reject) => {
-        let type = /data:image\/(.+);base64/i.exec(spl[0])
-        if (type) {
-            type = type[1]
-            const b = Buffer.from(data, 'base64')
+            let type = /data:image\/(.+);base64/i.exec(spl[0]);
 
-            const fileName = uuid()
-            s3.putObject({Bucket: process.env.BUCKET, Key: domain + '/' + fileName, Body: b}, (err, data) => {
-            resolve({url: imageUrl, stat: err || 'ok'})
-            })
-        } else {
-            resolve({url: imageUrl, stat: 'unknonwn type'})
-        }
+            // validate base64 data
+            if (type) {
+                type = type[1]
+                const b = Buffer.from(data, 'base64')
+
+                const fileName = uuid();
+                const put_obj_key = domain + '/' + fileName;
+                s3.putObject({Bucket: BUCKET_NAME, Key: put_obj_key, Body: b}, (err, data) => {
+                    resolve({url: imageUrl, stat: err || 'ok'})
+                })
+            } else {
+                resolve({url: imageUrl, stat: 'unknonwn type'})
+            }
         })
     }
 
 
     function fetchImages (images, domain) {
         return new Promise((resolve, reject) => {
-        let promises = []
-        images.forEach(image => {
-            if (/^data:image/i.test(image.url)) {
-            promises.push(decodeImage(image.url, image.id, domain))
-            } else {
-            promises.push(fetchImage(image.url, image.id, domain))
-            }
-        })
-        Promise.all(promises).then(values => { resolve(values) })
-        })
+            let promises = []
+            images.forEach(image => {
+                if (/^data:image/i.test(image.url)) {
+                    promises.push(decodeImage(image.url, image.id, domain))
+                } else {
+                    promises.push(fetchImage(image.url, image.id, domain))
+                }
+            })
+
+            // use promise to fetch all images asynchronously
+            Promise.all(promises).then(values => { resolve(values) })
+        });
     }
 
     return {
