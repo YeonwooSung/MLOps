@@ -10,13 +10,8 @@ frameworkVersion: '3'
 plugins:
   - serverless-dotenv-plugin
 
-# you can define service wide environment variables here
-environment:
-  AWS_ACCOUNT_ID: my_AWS_account_ID
-  BASIC_TODO_BUCKET_NAME: myBucketName
-
 custom:
-  bucket: ${env:BASIC_TODO_BUCKET_NAME}
+  bucket: ${env:BASIC_TODO_BUCKET}
   region: ${env:AWS_DEFAULT_REGION, 'ap-northeast-2'}
   accountid: ${env:AWS_ACCOUNT_ID}
   dotenv:

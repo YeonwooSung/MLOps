@@ -12,9 +12,6 @@ plugins:
   - serverless-domain-manager
   - serverless-dotenv-plugin
 
-# you can define service wide environment variables here
-environment:
-  AWS_ACCOUNT_ID: my_AWS_account_ID
 
 custom:
   region: ${env:AWS_DEFAULT_REGION, 'ap-northeast-2'}
