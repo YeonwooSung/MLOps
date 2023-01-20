@@ -44,11 +44,12 @@ resources:
               AllowedHeaders:
                 - '*'
               AllowedMethods:
-                - GET
-                - PUT
-                - POST
-                - DELETE
-                - HEAD
+                - 
+                  GET
+                  PUT
+                  POST
+                  DELETE
+                  HEAD
               MaxAge: 3000
         AccessControl: PublicRead
         WebsiteConfiguration:
