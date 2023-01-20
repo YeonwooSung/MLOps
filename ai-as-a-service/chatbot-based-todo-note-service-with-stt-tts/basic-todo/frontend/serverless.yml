@@ -1,0 +1,69 @@
+service: frontend
+# app and org for use with dashboard.serverless.com
+app: basic-todo
+org: YeonwooSung
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+frameworkVersion: '3'
+
+plugins:
+  - serverless-dotenv-plugin
+
+# you can define service wide environment variables here
+environment:
+  AWS_ACCOUNT_ID: my_AWS_account_ID
+  BASIC_TODO_BUCKET_NAME: myBucketName
+
+custom:
+  bucket: ${env:BASIC_TODO_BUCKET_NAME}
+  region: ${env:AWS_DEFAULT_REGION, 'ap-northeast-2'}
+  accountid: ${env:AWS_ACCOUNT_ID}
+  dotenv:
+    path: ../.env
+
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: ${opt:stage, 'dev'}
+  region: ${env:AWS_DEFAULT_REGION, 'ap-northeast-2'}
+
+
+resources:
+  Resources:
+    WebAppS3Bucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.bucket}
+        CorsConfiguration:
+          CorsRules:
+            -
+              AllowedOrigins:
+                - '*'
+              AllowedHeaders:
+                - '*'
+              AllowedMethods:
+                - GET
+                - PUT
+                - POST
+                - DELETE
+                - HEAD
+              MaxAge: 3000
+        AccessControl: PublicRead
+        WebsiteConfiguration:
+          IndexDocument: index.html
+          ErrorDocument: index.html
+    WebAppS3BucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket:
+          Ref: WebAppS3Bucket
+        PolicyDocument:
+          Statement:
+            - Sid: PublicReadGetObject
+              Effect: Allow
+              Principal: "*"
+              Action:
+                - s3:GetObject
+              Resource: arn:aws:s3:::${self:custom.bucket}/*
