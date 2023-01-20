@@ -1,0 +1,106 @@
+service: todo-service
+# app and org for use with dashboard.serverless.com
+app: basic-todo
+org: YeonwooSung
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+frameworkVersion: '3'
+
+plugins:
+  - serverless-offline
+  - serverless-domain-manager
+  - serverless-dotenv-plugin
+
+# you can define service wide environment variables here
+environment:
+  AWS_ACCOUNT_ID: my_AWS_account_ID
+
+custom:
+  region: ${env:AWS_DEFAULT_REGION, 'ap-northeast-2'}
+  accountid: ${env:AWS_ACCOUNT_ID}
+  domain: ${env:BASIC_TODO_DOMAIN}
+  dotenv:
+    path: ../.env
+  customDomain:
+    domainName: 'ys60api.${self:custom.domain}'
+    stage: ${self:provider.stage}
+    basePath: api
+    certificateName: '*.${self:custom.domain}'
+    createRoute53Record: true
+    endpointType: regional
+  serverless-offline:
+    port: 3000
+
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: ${opt:stage, 'dev'}
+  region: ${env:AWS_DEFAULT_REGION, 'eu-west-1'}
+  environment:
+    TODO_TABLE: '${self:service}-${self:provider.stage}'
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:${self:custom.region}:${self:custom.accountid}:*"
+
+
+# you can add packaging information here
+package:
+ patterns:
+   - '!node_modules/**'
+   - handler.js
+   - package.json
+   - dynamodb.yml
+
+
+functions:
+  create:
+    handler: handler.create
+    events:
+      - http:
+          method: POST
+          path: todo
+          cors: true
+
+  read:
+    handler: handler.read
+    events:
+      - http:
+          method: GET
+          path: todo/{id}
+          cors: true
+  update:
+    handler: handler.update
+    events:
+      - http:
+          method: PUT
+          path: todo/{id}
+          cors: true
+  delete:
+    handler: handler.delete
+    events:
+      - http:
+          method: DELETE
+          path: todo/{id}
+          cors: true
+  list:
+    handler: handler.list
+    events:
+      - http:
+          method: GET
+          path: todo
+          cors: true
+
+
+# you can add CloudFormation resource templates here
+resources:
+  - ${file(./dynamodb.yml)}
