@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+  postgres-server:
+    image: postgres:14.0
+    container_name: postgres-server
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydatabase
+    healthcheck:
+      test: ["CMD", "pg_isready", "-q", "-U", "myuser", "-d", "mydatabase"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  data-generator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: data-generator
+    depends_on:
+      postgres-server:
+        condition: service_healthy
+    command: ["postgres-server"]
+
+networks:
+  default:
+    name: mlops-network
