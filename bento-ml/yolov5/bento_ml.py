@@ -1,4 +1,5 @@
 import torch
+from torch import nn
 from pathlib import Path
 
 import bentoml
@@ -6,15 +7,16 @@ import bentoml
 from models.common import DetectMultiBackend
 from utils.torch_utils import select_device, time_sync
 from utils.dataloaders import IMG_FORMATS, VID_FORMATS, LoadImages
-from utils.general import check_file, check_img_size, non_max_suppression, scale_coords
+from utils.general import check_file, check_img_size, non_max_suppression, scale_boxes
 
 
 # Model
 device = select_device('')
-original_model = DetectMultiBackend('best.pt', device=device, dnn=False)
+original_model = torch.hub.load("ultralytics/yolov5", "yolov5s", force_reload=True)
+original_model.eval()
 
 
-class WrapperModel(torch.nn.Module):
+class WrapperModel(nn.Module):
     def __init__(self, model):
         super().__init__()
         self.model = model
@@ -28,11 +30,11 @@ class WrapperModel(torch.nn.Module):
 
         # Load model
         device = select_device('')
-        stride, names, pt, jit, onnx, engine = self.model.stride, self.model.names, self.model.pt, self.model.jit, self.model.onnx, self.model.engine
+        stride, names, pt = self.model.stride, self.model.names, self.model.pt
         imgsz = check_img_size((448, 448), s=stride)  # check image size
 
         half = False
-        if pt or jit:
+        if pt:
             self.model.model.half() if half else model.model.float()
 
         # Dataloader
@@ -58,8 +60,10 @@ class WrapperModel(torch.nn.Module):
             dt[1] += t3 - t2
 
             # NMS
-            pred = non_max_suppression(prediction=pred, conf_thres=torch.tensor(0.25).cuda(),
-                                       iou_thres=torch.tensor(0.45).cuda(), classes=None, agnostic=False, max_det=1000)
+            if torch.cuda.is_available():
+                pred = non_max_suppression(prediction=pred, conf_thres=torch.tensor(0.25).cuda(), iou_thres=torch.tensor(0.45).cuda(), classes=None, agnostic=False, max_det=1000)
+            else:
+                pred = non_max_suppression(prediction=pred, conf_thres=torch.tensor(0.25), iou_thres=torch.tensor(0.45), classes=None, agnostic=False, max_det=1000)
             dt[2] += time_sync() - t3
 
             # Process predictions
@@ -70,7 +74,7 @@ class WrapperModel(torch.nn.Module):
                 s += '%gx%g ' % im.shape[2:]  # print string
                 if len(det):
                     # Rescale boxes from img_size to im0 size
-                    det[:, :4] = scale_coords(im.shape[2:], det[:, :4], im0.shape).round()
+                    det[:, :4] = scale_boxes(im.shape[2:], det[:, :4], im0.shape).round()
 
                     # Print results
                     for c in det[:, -1].unique():
@@ -80,3 +84,7 @@ class WrapperModel(torch.nn.Module):
 
 
 model = WrapperModel(original_model)
+
+# save pytorch model for BentoML
+saved_model = bentoml.pytorch.save_model('pytorch_yolov5', model)
+print(f"Model saved: {saved_model}")
