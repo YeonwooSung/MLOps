@@ -1,0 +1,6 @@
+service: "service:svc"  # where the bentoml.Service instance is defined
+include:
+- "*.py"
+- "*.pt"
+docker:
+  base_image: "my_custom_image:latest"
