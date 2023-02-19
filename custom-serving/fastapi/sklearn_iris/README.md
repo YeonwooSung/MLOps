@@ -22,3 +22,27 @@ Since typing the docker-compose commands every time is also annoying, we will cr
 $ cd db_setup
 $ make server
 ```
+
+## Train and Save the Model
+
+Source codes for training and saving the model are in the `train_and_save_model` directory.
+
+The codes in the `train_and_save_model` directory are dependent on the db container, so before running the codes in the `train_and_save_model` directory, we need to make sure that the db container is running.
+
+```bash
+$ cd train_and_save_model
+$ make dependency
+$ make init
+```
+
+After running the above commands, run the training script:
+
+```bash
+$ python db_train.py
+```
+
+Then, run the validation script:
+
+```bash
+$ python db_validate_and_save.py
+```
