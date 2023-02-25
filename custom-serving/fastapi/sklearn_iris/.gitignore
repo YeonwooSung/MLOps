@@ -1,0 +1,6 @@
+# data
+data.csv
+**/data.csv
+
+# joblib
+train_and_save_model/db_pipeline.joblib
