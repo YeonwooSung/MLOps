@@ -175,32 +175,6 @@ After the MLflow server is running, we are now ready to save and load the model 
 For the python script that saves the model to the MLflow server, see the [model_registry/save_model_to_registry.py](./model_registry/save_model_to_registry.py) file.
 For the python script that loads the model from the MLflow server, see the [model_registry/load_model_from_registry.py](./model_registry/load_model_from_registry.py) file.
 
-## FastAPI
-
-All codes for the FastAPI are in the [`fastapi`](./fastapi/) directory.
-
-To serve the model, we will use the FastAPI.
-To deploy the FastAPI, we will use the uvicorn as an asgi within the Docker container.
-
-```Dockerfile
-FROM amd64/python:3.9-slim
-
-WORKDIR /usr/app
-
-RUN pip install -U pip &&\
-    pip install "fastapi[all]"
-
-COPY crud_pydantic.py crud_pydantic.py
-
-CMD ["uvicorn", "crud_pydantic:app", "--host", "0.0.0.0", "--reload"]
-```
-
-To build the Docker image, run the following command:
-
-```bash
-$ docker build -t sklearn-api-server .
-```
-
 ## Model Deployment
 
 Now, we are ready to deploy the model.
