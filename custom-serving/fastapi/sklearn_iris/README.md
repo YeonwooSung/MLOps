@@ -175,6 +175,26 @@ After the MLflow server is running, we are now ready to save and load the model 
 For the python script that saves the model to the MLflow server, see the [model_registry/save_model_to_registry.py](./model_registry/save_model_to_registry.py) file.
 For the python script that loads the model from the MLflow server, see the [model_registry/load_model_from_registry.py](./model_registry/load_model_from_registry.py) file.
 
+Running instructions:
+
+```bash
+# save the model to the MLflow server
+$ python save_model_to_registry.py
+
+# load the model from the MLflow server
+$ python load_model_from_registry.py --model-name "sk_model" --run-id "YOUR_RUN_ID"
+```
+
+When running the `load_model_from_registry.py` script, you need to specify the model name and the run id.
+
+The default model name is `sk_model`, so you can just use it if you do not change the model name.
+
+For the run id, you can find it in the MLflow server:
+
+![mlflow main page](./imgs/mlflow1.png)
+
+![mlflow model page](./imgs/mlflow2.png)
+
 ## Model Deployment
 
 Now, we are ready to deploy the model.
