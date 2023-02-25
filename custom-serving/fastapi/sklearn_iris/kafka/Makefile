@@ -40,10 +40,10 @@ server-clean:
 	make kafka-server-clean
 
 dependency:
-	make -C ../part1/ server
+	make -C ../db_setup/ server
 
 dependency-clean:
-	make -C ../part1/ server-clean
+	make -C ../db_setup/ server-clean
 
 all:
 	make dependency
