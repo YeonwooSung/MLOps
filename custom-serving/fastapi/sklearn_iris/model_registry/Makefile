@@ -7,7 +7,7 @@ server:
 
 server-clean:
 	docker compose down -v
-	docker rmi -f part3-mlflow-server minio/minio
+	docker rmi -f mlflow-server minio/minio
 
 dependency:
 	make -C ../db_setup/ server
