@@ -1,3 +1,0 @@
-mlflow
-cloudpickle==2.2.1
-scikit-learn==1.2.1

@@ -4,3 +4,7 @@ data.csv
 
 # joblib
 train_and_save_model/db_pipeline.joblib
+
+# model
+sk_model/
+**/sk_model/
