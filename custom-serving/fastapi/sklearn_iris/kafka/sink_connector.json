@@ -1,0 +1,19 @@
+{
+    "name": "postgres-sink-connector",
+    "config": {
+        "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+        "connection.url": "jdbc:postgresql://target-postgres-server:5432/targetdatabase",
+        "connection.user": "targetuser",
+        "connection.password": "targetpassword",
+        "table.name.format": "iris_data",
+        "topics": "postgres-source-iris_data",
+        "auto.create": false,
+        "auto.evolve": false,
+        "tasks.max": 2,
+        "transforms": "TimestampConverter",
+        "transforms.TimestampConverter.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+        "transforms.TimestampConverter.field": "timestamp",
+        "transforms.TimestampConverter.format": "yyyy-MM-dd HH:mm:ss.S",
+        "transforms.TimestampConverter.target.type": "Timestamp"
+    }
+}

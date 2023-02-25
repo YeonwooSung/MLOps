@@ -185,3 +185,8 @@ To run the docker-compose file, run the following command:
 ```bash
 $ docker compose up -d
 ```
+
+## Kafka
+
+If the input data is sort of streaming data, it is more efficient to use some MOM (Message Oriented Middleware) to handle the data.
+Clearly, Kafka is one of the most popular MOMs.
