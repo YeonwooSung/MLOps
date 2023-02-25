@@ -13,8 +13,8 @@ crud-pydantic:
 
 server:
 	docker build -t sklearn-api-server .
-	docker run -d --name api-server -p 8000:8000 part5-api-server
+	docker run -d --name api-server -p 8000:8000 api-server
 
 server-clean:
 	docker rm -f api-server
-	docker rmi -f part5-api-server
+	docker rmi -f api-server
