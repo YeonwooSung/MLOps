@@ -1,14 +1,14 @@
 naive-server:
-	docker compose -p naive -f naive-docker-compose.yaml up -d
+	docker-compose -p naive -f naive-docker-compose.yaml up -d
 
 naive-clean:
-	docker compose -p naive down -v
+	docker-compose -p naive down -v
 
 kafka-server:
-	docker compose -p kafka -f kafka-docker-compose.yaml up -d
+	docker-compose -p kafka -f kafka-docker-compose.yaml up -d
 
 kafka-server-clean:
-	docker compose -p kafka down -v
+	docker-compose -p kafka down -v
 	docker rmi -f \
 		kafka-connect \
 		confluentinc/cp-zookeeper:7.3.0 \
@@ -16,10 +16,10 @@ kafka-server-clean:
 		confluentinc/cp-spartema-registry:7.3.0
 
 target-server:
-	docker compose -p target -f target-docker-compose.yaml up -d
+	docker-compose -p target -f target-docker-compose.yaml up -d
 
 target-server-clean:
-	docker compose -p target down -v
+	docker-compose -p target down -v
 	docker rmi -f target-table-creator
 
 source-connector:

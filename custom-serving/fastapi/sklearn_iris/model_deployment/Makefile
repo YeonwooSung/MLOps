@@ -6,10 +6,10 @@ app:
 	uvicorn app:app --reload
 
 server:
-	docker compose up -d
+	docker-compose up -d
 
 server-clean:
-	docker compose down -v
+	docker-compose down -v
 	docker rmi -f api-with-model
 
 dependency:
