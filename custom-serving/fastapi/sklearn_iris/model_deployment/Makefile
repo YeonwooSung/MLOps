@@ -16,7 +16,8 @@ dependency:
 	make -C ../db_setup/ server
 	sleep 100
 	make -C ../model_registry/ server
-	python ../model_registry/save_model_to_registry.py
+	#python ../model_registry/save_model_to_registry.py
+	make -C ../model_registry/ save_model
 
 dependency-clean:
 	make -C ../model_registry/ server-clean

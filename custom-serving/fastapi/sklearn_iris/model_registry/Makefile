@@ -1,6 +1,11 @@
 init:
 	pip install -U pip
-	pip install boto3==1.26.8 mlflow==1.30.0 scikit-learn pandas
+	pip install boto3==1.26.8 mlflow==1.30.0 scikit-learn pandas psycopg2-binary
+
+save_model:
+	make init
+	python3 save_model_to_registry.py
+	ls
 
 server:
 	docker-compose up -d

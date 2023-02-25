@@ -200,6 +200,10 @@ For the run id, you can find it in the MLflow server:
 Now, we are ready to deploy the model.
 Download the trained model from the mlflow server.
 
+```
+$ python download_model.py --model-name sk_model --run-id <run-id>
+```
+
 To run the docker-compose file, run the following command:
 
 ```bash

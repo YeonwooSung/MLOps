@@ -21,8 +21,8 @@ server-clean:
 	make dashboard-server-clean
 
 dependency:
-	make -C ../db_setup/ server
-	make -C ../model_deployment/ server
+	#make -C ../db_setup/ server
+	make -C ../model_deployment/ all
 	make -C ../kafka/ server
 
 dependency-clean:
