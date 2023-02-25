@@ -190,3 +190,10 @@ $ docker compose up -d
 
 If the input data is sort of streaming data, it is more efficient to use some MOM (Message Oriented Middleware) to handle the data.
 Clearly, Kafka is one of the most popular MOMs.
+Therefore, we will adopt Kafka to handle the streaming data.
+For example codes and Dockerfiles to run Kafka, see the [kafka](./kafka/) directory.
+
+## Handling Streaming Data
+
+To handle the streaming data, we need to use the Kafka consumer to consume the data from the Kafka server.
+All codes could be find in the [stream](./stream/) directory.

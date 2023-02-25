@@ -1,0 +1,14 @@
+# stream-docker-compose.yaml
+version: "3"
+
+services:
+  data-subscriber:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: data-subscriber
+
+networks:
+  default:
+    name: mlops-network
+    external: true
