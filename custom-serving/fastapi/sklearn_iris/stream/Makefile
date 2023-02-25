@@ -5,11 +5,11 @@ dashboard-server:
 	docker-compose -p dashboard -f grafana-docker-compose.yaml up -d
 
 stream-server-clean:
-	docker-compose -p stream down -v
+	docker-compose -p stream -f stream-docker-compose.yaml down -v
 	docker rmi -f stream-data-subscriber
 
 dashboard-server-clean:
-	docker-compose -p dashboard down -v
+	docker-compose -p dashboard -f grafana-docker-compose.yaml down -v
 	docker rmi -f grafana/grafana
 
 server:
