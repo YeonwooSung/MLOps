@@ -221,3 +221,9 @@ For example codes and Dockerfiles to run Kafka, see the [kafka](./kafka/) direct
 
 To handle the streaming data, we need to use the Kafka consumer to consume the data from the Kafka server.
 All codes could be find in the [stream](./stream/) directory.
+
+As this example uses Grafana for visualization, we could check the data in the Grafana dashboard.
+
+![Grafana login](./imgs/grafana1.png)
+
+![Grafana dashboard](./imgs/grafana2.png)
