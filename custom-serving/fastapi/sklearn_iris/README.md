@@ -179,3 +179,9 @@ For the python script that loads the model from the MLflow server, see the [mode
 
 Now, we are ready to deploy the model.
 Download the trained model from the mlflow server.
+
+To run the docker-compose file, run the following command:
+
+```bash
+$ docker compose up -d
+```
