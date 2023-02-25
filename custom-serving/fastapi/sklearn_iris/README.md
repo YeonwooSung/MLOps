@@ -200,3 +200,8 @@ To build the Docker image, run the following command:
 ```bash
 $ docker build -t sklearn-api-server .
 ```
+
+## Model Deployment
+
+Now, we are ready to deploy the model.
+Download the trained model from the mlflow server.
