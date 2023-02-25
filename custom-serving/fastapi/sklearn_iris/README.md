@@ -100,6 +100,17 @@ services:
       retries: 3
 ```
 
+The main reason that we use the MinIO is that we can use the MinIO as a local S3 storage.
+This means that the codes that use the S3 storage can be used without any modification.
+
+```python
+# Set environments
+os.environ["MLFLOW_S3_ENDPOINT_URL"] = "http://localhost:9000"
+os.environ["MLFLOW_TRACKING_URI"] = "http://localhost:5001"
+os.environ["AWS_ACCESS_KEY_ID"] = "minio"
+os.environ["AWS_SECRET_ACCESS_KEY"] = "miniostorage"
+```
+
 Then, we will build a MLflow server to manage the models.
 
 ```Dockerfile
