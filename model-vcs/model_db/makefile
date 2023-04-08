@@ -1,4 +1,4 @@
-DOCKER_REPOSITORY := shibui/ml-system-in-actions
+DOCKER_REPOSITORY := YeonwooSung/fastapi-model-db
 
 ABSOLUTE_PATH := $(shell pwd)
 
@@ -25,7 +25,7 @@ push:
 build_all: build
 
 .PHONY: push_all
-push_all: push 
+push_all: push
 
 
 .PHONY: dc_build
