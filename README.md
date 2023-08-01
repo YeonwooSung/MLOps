@@ -29,4 +29,5 @@
     - [serving ML models with fastapi](./ml-serving/custom-serving/fastapi/)
     - [serving ML models with flask](./ml-serving/custom-serving/flask/)
     - [ray](./ml-serving/ray/)
+        * [Serve GPT-2 pipeline with Ray-serve and FastAPI](./ml-serving/ray/gpt2-with-ray-serve-and-fastapi/)
         * [Serve GPT-J-6B model with Ray-AIR](./ml-serving/ray/ray-air-with-gpt-j-6b/)
