@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "ray-air-with-gpt-j-6b"
+version = "0.1.0"
+description = "Serving GPT-J-6B model with Ray-Air."
+authors = ["YeonwooSung <neos960518@gmail.com>"]
+readme = "README.md"
+packages = [{include = "ray_air_with_gpt_j_6b"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+torch = "^2.0.1"
+accelerate = "^0.21.0"
+transformers = "^4.31.0"
+numpy = "^1.25.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
