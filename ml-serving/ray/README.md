@@ -4,3 +4,4 @@
 
 - [Ray Core](https://docs.ray.io/en/latest/ray-core/walkthrough.html) for building and scaling distributed applications
 - [Ray AIR (AI Runtime)](https://docs.ray.io/en/latest/ray-air/getting-started.html) for scalable ML applications
+    * [RAY for ML Infrastructure](https://docs.ray.io/en/master/ray-air/getting-started.html)
