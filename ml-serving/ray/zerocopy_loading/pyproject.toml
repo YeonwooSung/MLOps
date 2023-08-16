@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "zerocopy-loading"
+version = "0.1.0"
+description = ""
+authors = ["YeonwooSung <neos960518@gmail.com>"]
+readme = "README.md"
+packages = [{include = "zerocopy_loading"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+torch = "^2.0.1"
+transformers = "^4.31.0"
+ray = "^2.6.3"
+zerocopy = "^0.1.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
