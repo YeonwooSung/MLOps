@@ -14,14 +14,7 @@ model = AutoModelForImageClassification.from_pretrained("google/vit-base-patch16
 
 processed_input = processor(image, return_tensors='pt').to(device="cuda")
 
-start_time = time.time()
-with torch.no_grad():
-    _ = model(**processed_input)
-print("Time taken for inference (pure): ", time.time() - start_time)
-
 model = torch.compile(model)
 
-start_time = time.time()
 with torch.no_grad():
     _ = model(**processed_input)
-print("Time taken for inference (compile): ", time.time() - start_time)

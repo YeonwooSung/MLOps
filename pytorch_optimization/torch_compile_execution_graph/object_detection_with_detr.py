@@ -15,14 +15,7 @@ model = AutoModelForObjectDetection.from_pretrained("facebook/detr-resnet-50").t
 texts = ["a photo of a cat", "a photo of a dog"]
 inputs = processor(text=texts, images=image, return_tensors="pt").to("cuda")
 
-start_time = time.time()
-with torch.no_grad():
-    _ = model(**processed_input)
-print("Time taken for inference (pure): ", time.time() - start_time)
-
 model = torch.compile(model)
 
-start_time = time.time()
 with torch.no_grad():
     _ = model(**inputs)
-print("Time taken for inference (compile): ", time.time() - start_time)
