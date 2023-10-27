@@ -24,8 +24,10 @@ masked_index = 8
 tokenized_text[masked_index] = '[MASK]'
 
 indexed_tokens = script_tokenizer.convert_tokens_to_ids(tokenized_text)
+print(indexed_tokens)
 
 segments_ids = [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1]
+print(segments_ids)
 
 # Creating a dummy input
 tokens_tensor = torch.tensor([indexed_tokens])
