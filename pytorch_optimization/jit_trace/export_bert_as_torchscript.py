@@ -43,5 +43,9 @@ traced_model = torch.jit.trace(model, [tokens_tensor, segments_tensors])
 torch.jit.save(traced_model, "traced_bert.pt")
 
 
-output = traced_model(tokens_tensor, segments_tensors)
+with torch.no_grad():
+    output = traced_model(tokens_tensor, segments_tensors)
+print(output)
+
+output = model(tokens_tensor, segments_tensors)
 print(output)
