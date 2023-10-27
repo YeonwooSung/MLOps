@@ -38,14 +38,14 @@ model.eval()
 # If you are instantiating the model with *from_pretrained* you can also easily set the TorchScript flag
 model = BertModel.from_pretrained("bert-base-uncased", torchscript=True)
 
+# set all the parameters to not require grad
+for p in model.parameters():
+    p.requires_grad_(False)
+
 # Creating the trace
 traced_model = torch.jit.trace(model, [tokens_tensor, segments_tensors])
 torch.jit.save(traced_model, "traced_bert.pt")
 
-
-with torch.no_grad():
-    output = traced_model(tokens_tensor, segments_tensors)
-print(output)
 
 output = model(tokens_tensor, segments_tensors)
 print(output)

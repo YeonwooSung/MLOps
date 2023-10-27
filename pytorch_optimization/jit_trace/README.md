@@ -373,3 +373,24 @@ $ sha512sum traced_bert.pt
 즉, torch.jit.save()는 torch.no_grad()와 관련이 없다.
 
 ![체크썸 비교](./imgs/jit_checksum_comparison.png)
+
+그렇다면, 항상 torch.no_grad()를 사용해야 할까?
+기본적으로 torch.no_grad()는 런타임 종속적이기 때문에 이를 serialize 시키는 것은 어렵다.
+따라서, 다른 방법을 찾아야만 했는데, 내가 선택한 방법은 torch.jit.trace() 호출 전에 모든 파라미터의 requires_grad를 False로 만드는 것이었다:
+
+```python
+model.eval()
+
+# set all the parameters to not require grad
+for p in model.parameters():
+    p.requires_grad_(False)
+
+
+# Creating the trace
+traced_model = torch.jit.trace(model, [tokens_tensor, segments_tensors])
+torch.jit.save(traced_model, "traced_bert.pt")
+```
+
+위의 방법을 통해서 모델의 모든 파라미터에 requires_grad를 False가 되도록 하는 context를 추가해주었고, 이를 직렬화시켰다면 torch.jit.load()로 로딩을 다시 해도 torch.no_grad() 없이 autograd로 부터 자유로워지게 된다.
+
+추가로, model.eval()을 통해 모델의 모드를 바꾸는 것은 일부 모듈의 기능(예를 들면 dropout 등)을 변경시키기 때문에 model.eval()을 먼저 실행해주고 이를 torch.jit.trace()로 변경시켜줘야만 한다.
