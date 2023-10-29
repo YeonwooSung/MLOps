@@ -2,6 +2,9 @@
 
 [Torch-TensorRT](https://github.com/pytorch/TensorRT) is a PyTorch/TorchScript/FX compiler for NVIDIA GPUs using TensorRT
 
+- [Torch-TensorRT examples](https://github.com/pytorch/TensorRT/tree/main/examples)
+- [Torch-TensorRT notebooks](https://github.com/pytorch/TensorRT/tree/main/notebooks)
+
 ## Installation
 
 You could download and install the pre-built binaries with pip:
