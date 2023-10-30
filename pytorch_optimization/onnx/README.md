@@ -11,7 +11,13 @@ For example, a model trained in PyTorch can be exported to ONNX format and then 
 To export a 🤗 Transformers model to ONNX, first install an extra dependency:
 
 ```bash
-$ pip install optimum[exporters]
+$ pip install "optimum[exporters]"
+
+# for onnx runtime
+$ pip install "optimum[onnxruntime]"
+
+# for onnx runtime with GPU
+$ pip install "optimum[onnxruntime-gpu]"
 ```
 
 To check out all available arguments, refer to the [🤗 Optimum docs](https://huggingface.co/docs/optimum/exporters/onnx/usage_guides/export_a_model#exporting-a-model-to-onnx-using-the-cli), or view help in command line:
