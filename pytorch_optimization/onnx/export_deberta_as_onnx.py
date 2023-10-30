@@ -12,7 +12,6 @@ save_directory = "onnx/"
 # load the pretrained model
 ort_model = ORTModelForSequenceClassification.from_pretrained(
     model_checkpoint,
-    from_transformers=True,
     export=True
 )
 tokenizer = AutoTokenizer.from_pretrained(model_checkpoint)
