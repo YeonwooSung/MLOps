@@ -1,0 +1,19 @@
+# Use a base image with the required Python environment
+FROM python:3.10
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the trained model (e.g., a .pkl file) to the container
+COPY model.pkl /app/
+
+# Copy the server code (e.g., a .py file) to the container
+COPY src/server.py /app/
+
+COPY requirements.txt /app/
+
+# Install any dependencies required to load and run the model
+RUN pip install -r requirements.txt
+
+# Define the command to run when the container starts (e.g., serving the model)
+CMD ["python", "server.py"]

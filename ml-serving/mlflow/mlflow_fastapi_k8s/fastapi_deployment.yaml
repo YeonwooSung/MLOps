@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi-streamlit-deployment
+spec:
+  replicas: 2 # You can adjust the number of replicas as needed
+  selector:
+    matchLabels:
+      app: fastapi-streamlit
+  template:
+    metadata:
+      labels:
+        app: fastapi-streamlit
+    spec:
+      containers:
+      - name: fastapi-streamlit-container
+        image: your-registry/your-fastapi-streamlit-image:latest
+        ports:
+        - containerPort: 8501 # Streamlit's default port
+        resources:
+          limits:
+            memory: "1G"
+            cpu: "500m"
