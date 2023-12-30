@@ -1,0 +1,21 @@
+apiVersion: apps/v1 # kubernetes resource 의 API Version
+kind: Deployment # kubernetes resource name
+metadata: # 메타데이터 : name, namespace, labels, annotations 등을 포함
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec: # 메인 파트 : resource 의 desired state 를 명시
+  replicas: 3 # 동일한 template 의 pod 을 3 개 복제본으로 생성합니다.
+  selector:
+    matchLabels:
+      app: nginx
+  template: # Pod 의 template 을 의미합니다.
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx # container 의 이름
+        image: nginx:1.14.2 # container 의 image
+        ports:
+        - containerPort: 80 # container 의 내부 Port

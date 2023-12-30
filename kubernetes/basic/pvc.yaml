@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: myclaim
+spec: # pvc 의 정보를 입력하는 파트입니다.
+  accessModes:
+    - ReadWriteMany # ReadWriteOnce, ReadWriteMany 옵션을 선택할 수 있습니다.
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 10Mi # storage 용량을 설정합니다.
+  storageClassName: standard # 방금 전에 확인한 storageclass 의 name 을 입력합니다.
