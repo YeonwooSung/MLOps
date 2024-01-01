@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "localmodels"
+version = "0.1.0"
+description = ""
+authors = ["YeonwooSung <neos960518@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.10,<4.0"
+llama-index = "^0.9.19"
+qdrant-client = "^1.7.0"
+transformers = "^4.36.2"
+torch = "^2.1.2"
+flask = "^3.0.0"
+flask-cors = "^4.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
