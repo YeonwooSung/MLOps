@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "local-streaming-llm"
+version = "0.1.0"
+description = ""
+authors = ["YeonwooSung <neos960518@gmail.com>"]
+readme = "README.md"
+packages = [{include = "local_streaming_llm"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+transformers = "^4.36.2"
+fastapi = "^0.108.0"
+asyncio = "^3.4.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
