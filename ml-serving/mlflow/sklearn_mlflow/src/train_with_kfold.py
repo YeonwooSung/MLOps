@@ -85,6 +85,37 @@ x_test = scaler.transform(x_test)
 # sk_model = LogisticRegression(random_state=RANDOM_SEED, max_iter=1000, solver="newton-cg")
 mlflow.set_experiment("sklearn_creditcard_broad_search")
 
-#TODO
+anomaly_weights = [1, 5, 10, 15]
+num_folds = 5
+kf = KFold(n_splits=num_folds, random_state=RANDOM_SEED, shuffle=True)
 
-mlflow.end_run()
+logs = []
+for f in range(len(anomaly_weights)):
+    fold = 1
+    accuracies = []
+
+    for train, test in kf.split(x_train):
+        with mlflow.start_run():
+            print(f"Fold #{fold}")
+            fold += 1
+
+            sk_model = LogisticRegression(
+                random_state=RANDOM_SEED,
+                max_iter=1000,
+                solver="newton-cg",
+                class_weight={0: 1, 1: anomaly_weights[f]}
+            )
+            sk_model = train(sk_model, x_train[train], y_train[train])
+            test_acc, preds = evaluate(sk_model, x_train[test], y_train[test])
+            accuracies.append(test_acc)
+
+            print('-' * 20)
+            print(f"Fold {fold} anomaly weight {anomaly_weights[f]}")
+            print(f"Test Accuracy: {test_acc:.3%}")
+
+        fold += 1
+        mlflow.end_run()
+    print('=' * 20)
+    print(f"Anomaly weight {anomaly_weights[f]}")
+    print(f"Average accuracy: {np.mean(accuracies):.3%}")
+    print('=' * 20)
