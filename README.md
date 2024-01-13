@@ -12,6 +12,9 @@
         * [SageMaker HuggingFace toolkits](./AWS/SageMaker/sagemaker-huggingface-toolkit/)
         * [SageMaker serverless inference](./AWS/SageMaker/serverless-inference/)
 
+- [Data Management](./data_management/)
+    - [DVC](./data_management/dvc/)
+
 - [Kubernetes](./kubernetes/)
     - [Basic examples](./kubernetes/basic/)
     - [Troubleshootings](./kubernetes/troubleshooting/)
