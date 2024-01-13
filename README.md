@@ -12,6 +12,11 @@
         * [SageMaker HuggingFace toolkits](./AWS/SageMaker/sagemaker-huggingface-toolkit/)
         * [SageMaker serverless inference](./AWS/SageMaker/serverless-inference/)
 
+- [Kubernetes](./kubernetes/)
+    - [Basic examples](./kubernetes/basic/)
+    - [Troubleshootings](./kubernetes/troubleshooting/)
+        * [minikube troubleshooting](./kubernetes/troubleshooting/minikube.md)
+
 - [LLM](./LLM/)
     - [large language models](./LLM/large_laguage_models/)
         * [document oriented agent with openai api](./LLM/large_laguage_models/document_oriented_agent/)
