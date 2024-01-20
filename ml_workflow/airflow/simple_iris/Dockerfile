@@ -1,5 +1,5 @@
 # Dockerfile
-FROM python:3.8-slim
+FROM python:3.11.7-bullseye
 
 # set up environment variables
 ENV AIRFLOW_HOME=/usr/local/airflow
@@ -10,12 +10,12 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # install airflow
-RUN pip install apache-airflow
+RUN pip install "apache-airflow==2.7.3" --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-2.7.3/constraints-3.11.txt"
 
 # set up airflow
 RUN mkdir -p $AIRFLOW_HOME
 WORKDIR $AIRFLOW_HOME
-RUN airflow db init
+RUN airflow db migrate
 
 # copy the DAG file into the dags folder
 COPY my_dag.py $AIRFLOW_HOME/dags/
