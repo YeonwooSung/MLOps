@@ -1,9 +1,12 @@
-[[source]]
-url = "https://pypi.org/simple"
-verify_ssl = true
-name = "pypi"
+[tool.poetry]
+name = "llama-index-milvus-example"
+version = "0.1.0"
+description = ""
+authors = ["YeonwooSung <neos960518@gmail.com>"]
+readme = "README.md"
 
-[packages]
+[tool.poetry.dependencies]
+python = ">=3.10,<3.13"
 aiofiles = "==23.2.1"
 aiohttp = "==3.9.2"
 aiosignal = "==1.3.1"
@@ -95,8 +98,9 @@ apify-shared = "==1.0.2"
 joblib = "==1.3.2"
 nltk = "==3.8.1"
 
-[dev-packages]
 
-[requires]
-python_version = "3.9"
-python_full_version = "3.9.6"
+[tool.poetry.group.dev.dependencies]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
