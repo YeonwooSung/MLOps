@@ -8,7 +8,7 @@ packages = [{include = "ray_distilbert"}]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-fastapi = "^0.99.1"
+fastapi = "^0.109.1"
 ray = {extras = ["serve"], version = "^2.5.1"}
 torch = "^2.0.1"
 transformers = "^4.36.0"
