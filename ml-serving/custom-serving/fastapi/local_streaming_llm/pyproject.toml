@@ -9,7 +9,7 @@ packages = [{include = "local_streaming_llm"}]
 [tool.poetry.dependencies]
 python = "^3.11"
 transformers = "^4.36.2"
-fastapi = "^0.109.1"
+fastapi = "^0.109.2"
 asyncio = "^3.4.3"
 
 
