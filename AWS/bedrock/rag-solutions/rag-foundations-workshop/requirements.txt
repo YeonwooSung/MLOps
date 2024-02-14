@@ -7,5 +7,5 @@ langchain==0.1.6
 faiss-cpu>=1.7,<2
 unstructured==0.10.16
 SQLAlchemy==2.0.21
-llama-index==0.9.46
+llama-index==0.9.48
 xmltodict==0.13.0
