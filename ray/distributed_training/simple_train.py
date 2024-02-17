@@ -10,9 +10,9 @@ def train_func():
     optimizer = torch.optim.SGD(model.parameters(), lr=1e-2)
 
     # Setup data.
-    input = torch.randn(1000, 1)
-    labels = input * 2
-    dataset = torch.utils.data.TensorDataset(input, labels)
+    inputs = torch.randn(1000, 1)
+    labels = inputs * 2
+    dataset = torch.utils.data.TensorDataset(inputs, labels)
     dataloader = torch.utils.data.DataLoader(dataset, batch_size=32)
     dataloader = train.torch.prepare_data_loader(dataloader)
 
