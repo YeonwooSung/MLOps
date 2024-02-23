@@ -8,7 +8,7 @@ packages = [{include = "observe_with_langfuse"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-langchain = "^0.1.8"
+langchain = "^0.1.9"
 openai = "^0.28.0"
 langfuse = "^1.0.18"
 unstructured = "^0.10.14"
