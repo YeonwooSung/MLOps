@@ -11,4 +11,3 @@ adaptable.
 
 - [Train CV model with distributed nodes](./notebooks/simple_cv_example.ipynb)
 - [Train NLP model with accelerate and custom training function](./notebooks/simple_nlp_example.ipynb)
-
