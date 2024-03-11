@@ -1,4 +1,4 @@
-langchain==0.1.0
+langchain==0.1.11
 uvicorn==0.22.0
 fastapi==0.109.2
 unstructured==0.7.12
