@@ -1,5 +1,14 @@
 # Minikube Troubleshooting
 
+The minikube is a tool that makes it easy to run Kubernetes locally.
+Minikube runs a single-node Kubernetes cluster inside a VM on your laptop for users looking to try out Kubernetes or develop with it day-to-day.
+It quickly sets up a local Kubernetes cluster on macOS, Linux, and Windows.
+
+Run minikube on local machine with docker:
+```bash
+minikube start --container-runtime=docker --vm=true
+```
+
 ## Table of Contents
 
 * [1. Service not accessible](#1-service-not-accessible)
