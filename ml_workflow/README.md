@@ -1,3 +1,0 @@
-# MLOps Workflow
-
-- [airflow](./airflow/)
