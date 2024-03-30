@@ -2,7 +2,7 @@
 
 ## SLURM
 
-To manage the resources of the nodes in the cluster for distributed training, we could use SLURM (Simple Linux Utility for Resource Management).
+To manage the resources of the nodes in the cluster for distributed training, we could use [SLURM (Simple Linux Utility for Resource Management)](https://slurm.schedmd.com/sbatch.html).
 
 ### SLURM Setup
 
