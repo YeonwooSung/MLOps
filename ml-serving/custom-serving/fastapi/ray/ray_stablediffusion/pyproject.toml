@@ -11,7 +11,7 @@ python = "^3.9"
 fastapi = "^0.110.0"
 ray = {extras = ["serve"], version = "^2.5.1"}
 torch = "^2.0.1"
-transformers = "^4.36.0"
+transformers = "^4.38.0"
 diffusers = "^0.17.1"
 requests = "^2.31.0"
 
