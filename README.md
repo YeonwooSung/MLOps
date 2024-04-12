@@ -24,9 +24,11 @@
     - [large language models](./LLM/large_laguage_models/)
         * [document oriented agent with openai api](./LLM/large_laguage_models/document_oriented_agent/)
         * [function callings - make LLM to use tools](./LLM/large_laguage_models/function_calling/)
-
+    - [RAG](./LLM/RAG/)
     - [peft](./LLM/PEFT/)
-
+    - [fsdp_qlora](./LLM/fsdp_qlora/)
+    - [llama_index](./LLM/llama_index/)
+    - [TensorLLM](./LLM/TensorLLM/)
     - [prompt engineering](./LLM/prompt-engineering/)
         * [leaked-system-prompts: leaked system prompts of actual LLM-based services](./LLM/prompt-engineering/leaked-system-prompts/)
         * [source codes and notebooks for learning prompt engineering with openai](./LLM/prompt-engineering/src/)
