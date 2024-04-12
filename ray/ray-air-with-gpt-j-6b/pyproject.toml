@@ -10,7 +10,7 @@ packages = [{include = "ray_air_with_gpt_j_6b"}]
 python = "^3.10"
 torch = "^2.0.1"
 accelerate = "^0.21.0"
-transformers = "^4.38.0"
+transformers = "^4.39.3"
 numpy = "^1.25.2"
 
 
