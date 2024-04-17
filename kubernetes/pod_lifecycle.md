@@ -4,6 +4,11 @@
 
 ![pod creation lifecycle](./imgs/pod_creation.png)
 
+### kubelet is important for pod lifecycle
+
+Kubelet plays an essential role in the Kubernetes framework, managing and coordinating pods and nodes.
+It helps the kubernetes to manage the pods, and helps it to choose which node that the new pod should be published on.
+
 ## Pod Termination Lifecycle
 
 When a Pod is terminated, Kubernetes performs the following steps:
