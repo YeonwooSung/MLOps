@@ -77,3 +77,7 @@ def main():
     print(bert(**test_tokens).last_hidden_state)
     print("\nModel output after zero-copy model loading:")
     print(bert_skeleton(**test_tokens).last_hidden_state)
+
+
+if __name__ == "__main__":
+    main()
