@@ -1,0 +1,10 @@
+langchain
+langchain-community
+python-dotenv
+jupyter
+psycopg
+psycopg2-binary
+pgvector
+huggingface-hub
+InstructorEmbedding
+sentence-transformers
