@@ -1,6 +1,6 @@
 # Kubernetes
 
-- [Basic examples](./basic/)
+- [Basic examples](./src/basic/)
 - [Troubleshootings](./troubleshooting/)
     - [minikube troubleshooting](./troubleshooting/minikube.md)
 
