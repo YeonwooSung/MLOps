@@ -1,0 +1,31 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: opendatahub
+resources:
+# operator is installing the CRDs now.
+#  - spark-operator-crd-sparkapplications.yaml
+ - spark-operator-crd-sparkclusters.yaml
+ - spark-operator-crd-sparkhistoryservers.yaml
+ - spark-operator-clusterrole.yaml
+ - spark-operator-clusterrolebinding.yaml
+ - spark-operator-role.yaml
+ - spark-operator-rolebinding.yaml
+ - spark-operator-sa.yaml
+ - spark-operator-dc.yaml
+#- subscription.yaml
+
+
+configMapGenerator:
+- name: sparkparameters
+  env: params.env
+generatorOptions:
+  disableNameSuffixHash: true
+vars:
+- name: INGRESS_HOST
+  objref:
+    kind: ConfigMap
+    name: sparkparameters
+    apiVersion: v1
+  fieldref:
+    fieldpath: data.INGRESS_HOST
+

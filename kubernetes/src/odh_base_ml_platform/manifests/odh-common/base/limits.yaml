@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: ml-workshop-limit-range
+spec:
+  limits:
+  - default:
+      memory: 1Gi
+      cpu: '1'
+    defaultRequest:
+      memory: 500Mi
+      cpu: 100m
+    type: Container

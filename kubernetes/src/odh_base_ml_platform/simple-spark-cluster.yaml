@@ -1,0 +1,11 @@
+apiVersion: radanalytics.io/v1
+kind: SparkCluster
+metadata:
+  name: simple-spark-cluster
+  namespace: ml-workshop
+spec:
+  master:
+    instances: '1'
+  metrics: true
+  worker:
+    instances: '1'

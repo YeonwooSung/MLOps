@@ -1,0 +1,58 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  name: odh-monitoring
+  labels:
+    app: odh-monitoring
+    namespace: ml-workshop
+spec:
+  replicas: 1
+  serviceAccountName: prometheus-k8s
+  securityContext: {}
+  serviceMonitorNamespaceSelector: {}
+  serviceMonitorSelector: {}  
+  # serviceMonitorSelector:
+  #     matchLabels:
+  #       team: opendatahub
+  podMonitorSelector: {}
+      # matchLabels:
+      #   team: opendatahub
+  ruleSelector: {}
+
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: seldon-services
+  labels:
+    team: opendatahub
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/managed-by: seldon-core
+  namespaceSelector:
+    any: true
+    # matchNames:
+    # - ml-workshop
+  endpoints:
+  - port: "8000"
+    path: /prometheus
+    interval: 10s
+
+# apiVersion: monitoring.coreos.com/v1
+# kind: ServiceMonitor
+# metadata:
+#   name: seldon-services-2
+#   labels:
+#     team: opendatahub
+# spec:
+#   selector:
+#     matchLabels:
+#       app.kubernetes.io/managed-by: seldon-core
+#   namespaceSelector:
+#     any: true
+#   endpoints:
+#   - port: http
+#     path: /prometheus
+#     interval: 10s    

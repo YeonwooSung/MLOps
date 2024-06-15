@@ -1,0 +1,11 @@
+---
+kind: ServiceAccount
+apiVersion: v1
+metadata:
+  name: spark-crd-operator
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: spark-operator

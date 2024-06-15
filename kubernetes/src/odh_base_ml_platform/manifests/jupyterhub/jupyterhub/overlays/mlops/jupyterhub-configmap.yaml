@@ -1,0 +1,148 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: jupyterhub
+  name: jupyterhub-cfg
+data:
+  jupyterhub_admins: "admin"
+  gpu_mode: ""
+  singleuser_pvc_size: 2Gi
+  jupyterhub_config.py: >-
+    import os
+
+    c.KubeSpawner.pvc_name_template = '%s-nb-{username}-pvc' % os.environ['JUPYTERHUB_SERVICE_NAME']
+
+    c.KubeSpawner.volumes = [
+      dict(name='data',persistentVolumeClaim=dict(claimName=c.KubeSpawner.pvc_name_template)),
+      {
+        'name': 'foo-volume', 
+        'secret': {'secretName': 'app-aflow-redis'}
+      }
+    ]
+
+    c.KubeSpawner.volume_mounts = [
+      dict(name='data',mountPath=DEFAULT_MOUNT_PATH),
+      {
+        'name': 'foo-volume', 
+        'mountPath': '/tmp/data'
+      }
+    ]
+
+    c.KubeSpawner.user_storage_class = os.environ.get("JUPYTERHUB_STORAGE_CLASS",c.KubeSpawner.user_storage_class)
+
+
+    c.KubeSpawner.lifecycle_hooks = {
+        "postStart": {
+            "exec": {
+                "command": ["/bin/sh", "-c", "touch /tmp/a.out"]
+            }
+        }
+    }
+
+    import sys, subprocess
+
+    subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'oauthenticator'])
+
+    os.environ['OAUTH2_TOKEN_URL']= 'https://$(KEYCLOAK_URL)/auth/realms/master/protocol/openid-connect/token'
+
+    os.environ['OAUTH2_AUTHORIZE_URL']='https://$(KEYCLOAK_URL)/auth/realms/master/protocol/openid-connect/auth' 
+
+
+    c.JupyterHub.authenticator_class = 'oauthenticator.generic.GenericOAuthenticator'
+
+    c.OAuthenticator.client_id = 'jhub'
+
+    c.OAuthenticator.client_secret = '$(CLIENT_SECRET)'
+
+    c.GenericOAuthenticator.token_url = 'https://$(KEYCLOAK_URL)/auth/realms/master/protocol/openid-connect/token'
+
+    c.GenericOAuthenticator.userdata_url = 'https://$(KEYCLOAK_URL)/auth/realms/master/protocol/openid-connect/userinfo'
+
+    c.GenericOAuthenticator.userdata_method = 'GET'
+
+    c.GenericOAuthenticator.username_key = "preferred_username"
+
+    c.GenericOAuthenticator.userdata_params = {'state': 'state'} 
+
+    c.GenericOAuthenticator.tls_verify = False
+
+    c.OAuthenticator.validate_server_cert = False
+
+    # c.OpenShiftOAuthenticator.validate_cert = False
+
+    # https://github.com/jupyterhub/oauthenticator/blob/master/oauthenticator/generic.py
+
+    # https://github.com/jupyterhub/oauthenticator/blob/master/oauthenticator/oauth2.py
+
+    # https://github.com/opendatahub-io/jupyterhub-odh/blob/master/.jupyter/jupyterhub_config.py
+
+    # https://github.com/opendatahub-io/jupyterhub-singleuser-profiles/blob/5167618d33b708de1c232457c34d59a0eef8118a/jupyterhub_singleuser_profiles/images.py#L45
+
+
+    from jupyterhub_singleuser_profiles.openshift import OpenShift
+
+    def setup_environment_k8s(spawner):
+
+      # print(spawner.image)
+
+      ## this works
+      ## spawner.image = "quay.io/ml-aml-workshop" + spawner.image
+
+      ## load the imagestream to find the right one and load the image location from imagestream
+
+      namespace = os.environ.get('NOTEBOOK_NAMESPACE')
+
+      openshift = OpenShift(namespace=namespace)
+
+      imagestream_list = openshift.get_imagestreams('opendatahub.io/notebook-image=true')
+
+      for i in imagestream_list.items:
+
+        # print('start \n\n\n')
+
+        # print(i.metadata.annotations)
+
+        # print(i.spec.tags)
+
+        selected_stream = spawner.image.split(':')
+
+        if selected_stream[0] == i.metadata.name:
+
+          spawner.image = i.status.tags[0].dockerImageReference
+
+          break
+
+        # imagestream_tags = i.spec.tags
+
+        # for tag in imagestream_tags:
+          
+          # print('\nstart tag \n')
+
+          # print(tag)
+
+          # print(tag.name)
+
+
+        # print('\n')
+
+        # print(i.status.tags[0].dockerImageReference)
+
+        print(spawner.image)
+
+        print('\n')
+
+
+      spawner.single_user_profiles.load_profiles(username=spawner.user.name)
+
+      spawner.single_user_profiles.setup_services(spawner, spawner.image, spawner.user.name)
+
+
+
+
+    c.OpenShiftSpawner.pre_spawn_hook = setup_environment_k8s
+    
+
+  jupyterhub_admins: "admin"
+  gpu_mode: ""
+  singleuser_pvc_size: 10Gi

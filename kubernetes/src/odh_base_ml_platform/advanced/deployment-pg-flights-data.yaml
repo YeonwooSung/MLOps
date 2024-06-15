@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pg-flights-data
+  labels:
+    app: pg-flights-data
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pg-flights-data
+  template:
+    metadata:
+      labels:
+        app: pg-flights-data
+    spec:
+      containers:
+      - name: postgres
+        image: quay.io/ml-on-k8s/flights-data:5.0
+        imagePullPolicy: "IfNotPresent"
+        ports:
+        - containerPort: 5432
+        env:
+          - name: PGDATA
+            value: /pg-data
+        resources:
+          requests:
+            memory: "2G"
+            cpu: "500m"
+          limits:
+            memory: "2G"
+            cpu: "2"
