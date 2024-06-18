@@ -9,11 +9,11 @@ packages = [{include = "mlflow_fastapi_k8s"}]
 [tool.poetry.dependencies]
 python = "^3.11"
 fastapi = "^0.109.2"
-mlflow = "^2.9.2"
-scikit-learn = "^1.3.2"
+mlflow = "^2.13.2"
+scikit-learn = "^1.5.0"
 uvicorn = "^0.24.0.post1"
 streamlit = "^1.29.0"
-joblib = "^1.3.2"
+joblib = "^1.4.2"
 
 
 [build-system]
