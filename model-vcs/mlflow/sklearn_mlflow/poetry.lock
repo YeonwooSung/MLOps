@@ -917,13 +917,13 @@ python-dateutil = ">=2.7"
 
 [[package]]
 name = "mlflow"
-version = "2.14.2"
+version = "2.14.3"
 description = "MLflow is an open source platform for the complete machine learning lifecycle"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "mlflow-2.14.2-py3-none-any.whl", hash = "sha256:cc809250bc6c20f821519ef93230fe886d243a40c5ac650578aaa4e38e30aadc"},
-    {file = "mlflow-2.14.2.tar.gz", hash = "sha256:cea0b678adf38d1f8f6cd97130a86325d74bb1593b895b6afadc750021ebf5a2"},
+    {file = "mlflow-2.14.3-py3-none-any.whl", hash = "sha256:2de915346c8e34a9d13efbd6469551980923619274db57fd2253621a2c666e18"},
+    {file = "mlflow-2.14.3.tar.gz", hash = "sha256:292cae4b83574a0cb223117e224caa6798933078af0233719c2b612bea645617"},
 ]
 
 [package.dependencies]
@@ -1862,20 +1862,20 @@ files = [
 
 [[package]]
 name = "zipp"
-version = "3.17.0"
+version = "3.19.1"
 description = "Backport of pathlib-compatible object wrapper for zip files"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "zipp-3.17.0-py3-none-any.whl", hash = "sha256:0e923e726174922dce09c53c59ad483ff7bbb8e572e00c7f7c46b88556409f31"},
-    {file = "zipp-3.17.0.tar.gz", hash = "sha256:84e64a1c28cf7e91ed2078bb8cc8c259cb19b76942096c8d7b84947690cabaf0"},
+    {file = "zipp-3.19.1-py3-none-any.whl", hash = "sha256:2828e64edb5386ea6a52e7ba7cdb17bb30a73a858f5eb6eb93d8d36f5ea26091"},
+    {file = "zipp-3.19.1.tar.gz", hash = "sha256:35427f6d5594f4acf82d25541438348c26736fa9b3afa2754bcd63cdb99d8e8f"},
 ]
 
 [package.extras]
-docs = ["furo", "jaraco.packaging (>=9.3)", "jaraco.tidelift (>=1.4)", "rst.linker (>=1.9)", "sphinx (<7.2.5)", "sphinx (>=3.5)", "sphinx-lint"]
-testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "pytest (>=6)", "pytest-black (>=0.3.7)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=2.2)", "pytest-ignore-flaky", "pytest-mypy (>=0.9.1)", "pytest-ruff"]
+doc = ["furo", "jaraco.packaging (>=9.3)", "jaraco.tidelift (>=1.4)", "rst.linker (>=1.9)", "sphinx (>=3.5)", "sphinx-lint"]
+test = ["big-O", "jaraco.functools", "jaraco.itertools", "jaraco.test", "more-itertools", "pytest (>=6,!=8.1.*)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=2.2)", "pytest-ignore-flaky", "pytest-mypy", "pytest-ruff (>=0.2.1)"]
 
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "f01f6213d8ca63f58f9109f2833816f06e43f091e09e76c105850b2c22d213e5"
+content-hash = "d9e447dbb2a7d3568f1b2757721205fa317d41e763061e419988a4226b590f15"
