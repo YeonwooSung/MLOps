@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  ineligible_loan_model_pipeline:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: ineligible_loan_model:pipeline-latest
+    container_name: ineligible_loan_model_pipeline
+    volumes:
+      - ~/airflow/mlops_data_store:/home/mlops/mlops_data_store
+    environment:
+      PYTHONPATH: /home/mlops
+      MLOPS_DATA_STORE: /home/mlops/mlops_data_store
+      MODEL_OUTPUT_HOME: /home/mlops
+      FEATURE_STORE_URL: mysql+pymysql://root:root@mariadb-mlops-study/mlops
+    command: >
+      python ${PYTHON_FILE} ${MODEL_NAME} ${MODEL_VERSION} ${BASE_DAY}
+    networks:
+      mlops_study_network:
+networks:
+  mlops_study_network:
+    name: mlops_study_network
+    external: true
+

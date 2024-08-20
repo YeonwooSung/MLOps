@@ -1,0 +1,39 @@
+version: "3"
+
+services:
+  ineligible_loan_model_api_1:
+    image: ineligible_loan_model:api-latest
+    container_name: ineligible_loan_model_api_01
+    restart: always
+    ports:
+      - "8001:8000"
+    tty: true
+    volumes:
+      - ~/airflow/mlops_data_store/${ENCODERS_PATH}:/home/mlops/resources/encoders
+      - ~/airflow/mlops_data_store/${MODEL_PATH}:/home/mlops/resources/model
+    environment:
+      ML_METADATA_URL: mysql+pymysql://root:root@mariadb-mlops-study/mlops_meta
+      MODEL_NAME: ${MODEL_NAME}
+      MODEL_VERSION: ${MODEL_VERSION}
+    networks:
+      mlops_study_network:
+  ineligible_loan_model_api_2:
+    image: ineligible_loan_model:api-latest
+    container_name: ineligible_loan_model_api_02
+    restart: always
+    ports:
+      - "8002:8000"
+    tty: true
+    volumes:
+      - ~/airflow/mlops_data_store/${ENCODERS_PATH}:/home/mlops/resources/encoders
+      - ~/airflow/mlops_data_store/${MODEL_PATH}:/home/mlops/resources/model
+    environment:
+      ML_METADATA_URL: mysql+pymysql://root:root@mariadb-mlops-study/mlops_meta
+      MODEL_NAME: ${MODEL_NAME}
+      MODEL_VERSION: ${MODEL_VERSION}
+    networks:
+      mlops_study_network:
+networks:
+  mlops_study_network:
+    name: mlops_study_network
+    external: true

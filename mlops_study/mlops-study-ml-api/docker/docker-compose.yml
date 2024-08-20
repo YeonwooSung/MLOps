@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  ineligible_loan_model_api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      args:
+        - RESOURCE_PATH=resources
+    image: ineligible_loan_model:api-latest
+    container_name: ineligible_loan_model_api
+    restart: always
+    ports:
+      - "8000:8000"
+    tty: true
+    environment:
+      ML_METADATA_URL: mysql+pymysql://root:root@mariadb-mlops-study/mlops_meta
+    networks:
+      mlops_study_network:
+networks:
+  mlops_study_network:
+    name: mlops_study_network
+    external: true

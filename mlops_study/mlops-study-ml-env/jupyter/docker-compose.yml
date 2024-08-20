@@ -1,0 +1,21 @@
+version:  '3'
+
+services:
+  datascience-notebook:
+    image: jupyter/datascience-notebook:python-3.10.9
+    container_name: jupyter_notebook
+    hostname: jupyter-mlops-study
+    restart: always
+    volumes:
+      - ${PWD}/data/work:/home/jovyan
+      - ${PWD}/data/requirements:/tmp
+    ports:
+      - "8888:8888"
+    environment:
+      - JUPYTER_ALLOW_INSECURE_WRITES=true
+    networks:
+      mlops_study_network:
+networks:
+  mlops_study_network:
+    name: mlops_study_network
+    external: true
