@@ -514,11 +514,11 @@ def fsdp_main(local_rank:int, world_size:int, args:Dict):
     init_start_event = torch.cuda.Event(enable_timing=True)
     init_end_event = torch.cuda.Event(enable_timing=True)
 
+
     # model precision, qlora compute precison, and FSDP mixed precision policy.
     # The Linear4Bit quant_storage dtype should always match the FSDP param_dtype. The compute_dtype should match the AMP compute dtype.
     # MixedPrecision(param_dtype=fp32, reduce_dtype=fp32, buffer_dtype=fp32) uses `torch.amp.autocast` to control precision.
     # limited qlora testing shows that fp16 only works with autocast while bf16 trains with both pure and autocast modes.
-    # TODO: test how often this holds for mp_fp16
     mp_policy = None
     load_param_skip_names = []
     if args["precision"] == "bf16":
@@ -541,7 +541,9 @@ def fsdp_main(local_rank:int, world_size:int, args:Dict):
 
     # Load tokenizer
     tokenizer = AutoTokenizer.from_pretrained(args["model_name"])
-    tokenizer.pad_token_id = tokenizer.eos_token_id # TODO check if it exists first
+    # check if it exists first, if not, set it to eos_token_id
+    if tokenizer.pad_token_id is None:
+        tokenizer.pad_token_id = tokenizer.eos_token_id
 
     # Set up dataloader
     dataloader = get_dataloader(tokenizer, args)
@@ -578,15 +580,20 @@ def fsdp_main(local_rank:int, world_size:int, args:Dict):
         with init_empty_weights():
             model = AutoModelForCausalLM.from_config(cfg)
             if args["train_type"] in ["hqq_lora"]:
-                # TODO: Tune BaseQuantizeConfig.
-                quant_config = BaseQuantizeConfig(nbits=4, group_size=64, quant_zero=True,
-                                                  quant_scale=True, offload_meta=True, view_as_float=True)
-                model.model = replace_linear(model.model, HQQLinear, quant_config, device=rank,
-                                             compute_dtype=compute_dtype, del_orig=True, initialize=False)
+                quant_config = BaseQuantizeConfig(
+                    nbits=4, group_size=64, quant_zero=True,
+                    quant_scale=True, offload_meta=True, view_as_float=True
+                )
+                model.model = replace_linear(
+                    model.model, HQQLinear, quant_config, device=rank,
+                    compute_dtype=compute_dtype, del_orig=True, initialize=False
+                )
                 HQQLinear.set_backend(HQQBackend.ATEN_BACKPROP)
             else:
-                model.model = replace_linear(model.model, Linear4bit, compute_dtype=compute_dtype,
-                                             quant_type='nf4', quant_storage=torch_dtype)
+                model.model = replace_linear(
+                    model.model, Linear4bit, compute_dtype=compute_dtype,
+                    quant_type='nf4', quant_storage=torch_dtype
+                )
         model.is_loaded_in_4bit = True
 
         # Grab the safetensors files that hold the weights
@@ -721,7 +728,6 @@ def fsdp_main(local_rank:int, world_size:int, args:Dict):
         non_reentrant_wrapper = functools.partial(
             checkpoint_wrapper,
             checkpoint_impl=CheckpointImpl.REENTRANT if args['reentrant_checkpointing'] else CheckpointImpl.NO_REENTRANT,
-
         )
 
         check_fn = lambda submodule: isinstance(submodule, LlamaDecoderLayer)

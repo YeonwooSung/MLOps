@@ -92,5 +92,5 @@ for name, module in trainer.model.named_modules():
     if "norm" in name:
         module = module.to(torch.float32)
 
-# Train :)
+# Train
 trainer.train()
