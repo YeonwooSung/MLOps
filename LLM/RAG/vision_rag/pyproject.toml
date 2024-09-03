@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+requires-python = ">=3.11"
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "vision_rag"
+version = "0.0.1"
+
+dependencies = [
+                "torch",
+                "torchvision",
+                "transformers",
+                "accelerate",
+                "wikipedia",
+                "langchain-text-splitters",
+                "langchain-huggingface",
+                "langchain-community",
+                "langchain-core",
+                "faiss-cpu"
+               ]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["vrag"]

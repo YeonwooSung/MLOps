@@ -1,0 +1,2 @@
+Your task is to write a few search keywords to find Wikipedia pages containing the relevant information to answer the question about the provided image. The keywords must be as specific as possible and must represent the information that is needed to answer the question in relation to the provided image. Don't write more than 3 search keywords.
+Question: {question}

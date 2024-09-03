@@ -1,0 +1,4 @@
+You are a helpful assistant tasked with answering questions about the provided image.
+Answer the following question: {question}
+You can use the following passages retrieved from Wikipedia to provide your answer:
+{passages}
