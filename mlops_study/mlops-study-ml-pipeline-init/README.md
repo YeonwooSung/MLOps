@@ -1,9 +1,6 @@
 # mlops-study-ml-pipeline-init
-MLOps 구축 가이드북에서 실습을 진행하기 위해서 사용되며, Aiflow를 처음 접하는 실습자를 위해서 쉽게 standalone으로 구성할 수 있도록 제공되는 프로젝트이다.
-해당 프로젝트를 다운로드 받아서, ariflow_install.sh 파일을 실행하면 쉽게 Airflow 2.7.2 설치하고 DAG를 개발해 볼 수 있다.
-mlops-study-ml-pipeline-init을 기반으로 mlops-study-ml-pipeline 프로젝트의 ML 파이프라인을 개발해 보면서, 해당 프로젝트가 더 풍성해지는 것을 경험해 볼 수 있다.
 
-## 프로젝트 구조
+## Project Structure
 ```text
 .
 ├── features
