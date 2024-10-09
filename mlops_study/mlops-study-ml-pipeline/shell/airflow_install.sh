@@ -1,6 +1,6 @@
 # Airflow needs a home. ~/airflow is the default, but you can put it
 # somewhere else if you prefer (optional)
-export AIRFLOW_HOME=~/airflow
+export AIRFLOW_HOME=${PWD}/airflow
 
 # Install Airflow using the constraints file
 AIRFLOW_VERSION=2.7.2
