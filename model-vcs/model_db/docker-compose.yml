@@ -19,7 +19,7 @@ services:
 
   model_db:
     container_name: model_db
-    image: ml-system-in-actions:model_db_0.0.1
+    image: neos960518/ml-system-in-actions:model_db_0.0.1
     restart: always
     environment:
       - POSTGRES_SERVER=postgres

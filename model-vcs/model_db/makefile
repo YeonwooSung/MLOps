@@ -1,4 +1,4 @@
-DOCKER_REPOSITORY := YeonwooSung/fastapi-model-db
+DOCKER_REPOSITORY := neos960518/ml-system-in-actions
 
 ABSOLUTE_PATH := $(shell pwd)
 
@@ -25,20 +25,20 @@ push:
 build_all: build
 
 .PHONY: push_all
-push_all: push
+push_all: push 
 
 
-.PHONY: dc_build
-dc_build: build_all
+.PHONY: c_build
+c_build: build_all
 
-.PHONY: dc_up
-dc_up:
-	docker-compose \
+.PHONY: c_up
+c_up:
+	docker compose \
 		-f ./$(DOCKER_COMPOSE) \
 		up -d
 
-.PHONY: dc_down
-dc_down:
-	docker-compose \
+.PHONY: c_down
+c_down:
+	docker compose \
 		-f ./$(DOCKER_COMPOSE) \
 		down

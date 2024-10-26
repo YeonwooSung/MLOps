@@ -1,8 +1,9 @@
 import uuid
 from typing import Dict, List, Optional
-
 from sqlalchemy.orm import Session
-from src.db import models, schemas
+
+# custom module
+from model_db.db import models, schemas
 
 
 def select_project_all(db: Session) -> List[schemas.Project]:

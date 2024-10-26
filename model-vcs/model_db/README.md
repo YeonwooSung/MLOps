@@ -1,38 +1,39 @@
-# Model Management DB
+# Model management database
 
-## Main Aim
+## Goal
 
-Construct a REST API for managing models and a database for storing models.
-Below is the architecture of the model management db.
+Build a database and REST API service for managing models.
 
 ![img](./img/model_db.png)
 
-## Pre-requisites
+## Usage
 
-- Python 3.8 or later
-- Docker
-- Docker compose
-
-## Running Instruction
+1. Build Docker image
 
 ```sh
 $ make build
+# 실행 커맨드
+# docker build \
+#     -t shibui/ml-system-in-actions:model_db_0.0.1 \
+#     -f Dockerfile \
+#     .
+# 출력 생략
+# dockerイメージ로 shibui/ml-system-in-actions:model_db_0.0.1 이 빌드됩니다.
 ```
 
-2. Docker compose 로 모델 DB 기동
+2. Run Model DB service with Docker compose
 
 ```sh
-$ make dc_up
-# 실행 커맨드
-# docker-compose \
+$ make c_up
+# docker compose \
 #     -f ./docker-compose.yml \
 #     up -d
 ```
 
-3. 모델 DB 서비스 기동 확인
+3. Check the Model DB service
 
-10초 정도 안에 기동됩니다.
-브라우저에서 `localhost:8000/docs` 를 열고, Swagger 가 기동하는지 확인합니다. 
+Runs within 15 seconds after the service starts.
+Check the service with Swagger UI (http://localhost:8000/docs).
 
 ![img](./img/model_swagger.png)
 
@@ -40,8 +41,7 @@ $ make dc_up
 
 ```sh
 $ make c_down
-# 실행 커맨드
-# docker-compose \
+# docker compose \
 #     -f ./docker-compose.yml \
 #     down
 ```

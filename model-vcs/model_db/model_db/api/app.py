@@ -1,10 +1,13 @@
 from logging import getLogger
 
 from fastapi import FastAPI
-from src.api.routers import api, health
-from src.configurations import APIConfigurations
-from src.db import initialize
-from src.db.database import engine
+
+# custom module
+from model_db.api.routers import api, health
+from model_db.configurations import APIConfigurations
+from model_db.db import initialize
+from model_db.db.database import engine
+
 
 logger = getLogger(__name__)
 
