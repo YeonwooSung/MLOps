@@ -55,6 +55,10 @@ documents = [
     {"text": "Yet another example sentence"},
     {"text": "One more example sentence"},
     {"text": "The final example sentence"},
+    {"text": "The name of the game is to find the best sentence"},
+    {"text": "The quick brown fox jumps over the lazy dog"},
+    {"text": "The quick brown fox jumps over the lazy cat"},
+    {"text": "The quick brown fox jumps over the lazy rabbit"},
 ]
 
 # Prepare documents with embeddings for bulk indexing
@@ -74,3 +78,36 @@ def prepare_documents(docs):
 bulk(es, prepare_documents(documents))
 
 print("Documents indexed successfully.")
+
+
+# Query the index with a sample text
+query_text = "Example sentence"
+query_embedding = generate_embedding(query_text)
+
+# Perform a cosine similarity search (retrieve top 5 similar documents)
+query = {
+    "query": {
+        "script_score": {
+            "query": {
+                "match_all": {}
+            },
+            "script": {
+                "source": "cosineSimilarity(params.query_vector, 'vector') + 1.0",
+                "params": {
+                    "query_vector": query_embedding
+                }
+            }
+        }
+    },
+    "size": 5
+}
+
+# Execute the search query
+response = es.search(index=index_name, body=query)
+
+# Print the search results
+print("Search results:")
+for hit in response["hits"]["hits"]:
+    print(f"Document: {hit['_source']['text']}")
+    print(f"Similarity score: {hit['_score']}")
+    print()
