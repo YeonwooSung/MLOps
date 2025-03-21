@@ -9,9 +9,9 @@ packages = [{include = "ray_yolov5s"}]
 [tool.poetry.dependencies]
 python = "^3.9"
 fastapi = "^0.111.0"
-ray = {extras = ["serve"], version = "^2.43.0"}
+ray = {extras = ["serve"], version = "^2.44.0"}
 requests = "^2.31.0"
-transformers = "^4.48.0"
+transformers = "^4.50.0"
 torch = "^2.4.0"
 pillow = "^10.3.0"
 
