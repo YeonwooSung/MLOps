@@ -704,15 +704,15 @@ embeddings = ["matplotlib", "numpy", "openpyxl (>=3.0.7)", "pandas (>=1.2.3)", "
 wandb = ["numpy", "openpyxl (>=3.0.7)", "pandas (>=1.2.3)", "pandas-stubs (>=1.1.0.11)", "wandb"]
 
 [[package]]
-name = "pyautogen"
+name = "ag2"
 version = "0.1.13"
 description = "Enabling Next-Gen LLM Applications via Multi-Agent Conversation Framework"
 optional = false
 python-versions = ">=3.8"
 groups = ["main"]
 files = [
-    {file = "pyautogen-0.1.13-py3-none-any.whl", hash = "sha256:3a022af253bae7284b5704f2155ebe111d634e88fe005b9e19ce49eb8c4cea4f"},
-    {file = "pyautogen-0.1.13.tar.gz", hash = "sha256:ed6333338b45dcc3fa82ccec691d9229b29df0cfc019b0c53eb0c276c88e1f44"},
+    {file = "ag2-0.1.13-py3-none-any.whl", hash = "sha256:3a022af253bae7284b5704f2155ebe111d634e88fe005b9e19ce49eb8c4cea4f"},
+    {file = "ag2-0.1.13.tar.gz", hash = "sha256:ed6333338b45dcc3fa82ccec691d9229b29df0cfc019b0c53eb0c276c88e1f44"},
 ]
 
 [package.dependencies]
