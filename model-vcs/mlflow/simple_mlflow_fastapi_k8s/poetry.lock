@@ -282,7 +282,7 @@ description = "Cross-platform colored terminal text."
 optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*,>=2.7"
 groups = ["main"]
-markers = "sys_platform == \"win32\" or platform_system == \"Windows\""
+markers = "platform_system == \"Windows\" or sys_platform == \"win32\""
 files = [
     {file = "colorama-0.4.6-py2.py3-none-any.whl", hash = "sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6"},
     {file = "colorama-0.4.6.tar.gz", hash = "sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44"},
@@ -1155,22 +1155,6 @@ lingua = ["lingua"]
 testing = ["pytest"]
 
 [[package]]
-name = "markdown"
-version = "3.5.1"
-description = "Python implementation of John Gruber's Markdown."
-optional = false
-python-versions = ">=3.8"
-groups = ["main"]
-files = [
-    {file = "Markdown-3.5.1-py3-none-any.whl", hash = "sha256:5874b47d4ee3f0b14d764324d2c94c03ea66bee56f2d929da9f2508d65e722dc"},
-    {file = "Markdown-3.5.1.tar.gz", hash = "sha256:b65d7beb248dc22f2e8a31fb706d93798093c308dc1aba295aedeb9d41a813bd"},
-]
-
-[package.extras]
-docs = ["mdx-gh-links (>=0.2)", "mkdocs (>=1.5)", "mkdocs-gen-files", "mkdocs-literate-nav", "mkdocs-nature (>=0.6)", "mkdocs-section-index", "mkdocstrings[python]"]
-testing = ["coverage", "pyyaml"]
-
-[[package]]
 name = "markdown-it-py"
 version = "3.0.0"
 description = "Python port of markdown-it. Markdown parsing, done right!"
@@ -1328,14 +1312,14 @@ files = [
 
 [[package]]
 name = "mlflow"
-version = "2.20.3"
+version = "3.1.0"
 description = "MLflow is an open source platform for the complete machine learning lifecycle"
 optional = false
 python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "mlflow-2.20.3-py3-none-any.whl", hash = "sha256:efafe5d4d17b53be1ae02c7d8708a5e4bbde4bd3aecd2bd68b64a3c4175e9dc6"},
-    {file = "mlflow-2.20.3.tar.gz", hash = "sha256:a7b1baf53d4f10160864961320df0c4cb74fb4f21c7522ef80a35290d03573bb"},
+    {file = "mlflow-3.1.0-py3-none-any.whl", hash = "sha256:4101d027b548afacc263b76617098454ce5281e23021bc44f11edc684495e63d"},
+    {file = "mlflow-3.1.0.tar.gz", hash = "sha256:de0b90aa058b532738081deec791bb2fca35abcca0fd9358da75fefe0a6170f4"},
 ]
 
 [package.dependencies]
@@ -1344,16 +1328,11 @@ docker = ">=4.0.0,<8"
 Flask = "<4"
 graphene = "<4"
 gunicorn = {version = "<24", markers = "platform_system != \"Windows\""}
-Jinja2 = [
-    {version = ">=2.11,<4", markers = "platform_system != \"Windows\""},
-    {version = ">=3.0,<4", markers = "platform_system == \"Windows\""},
-]
-markdown = ">=3.3,<4"
 matplotlib = "<4"
-mlflow-skinny = "2.20.3"
+mlflow-skinny = "3.1.0"
 numpy = "<3"
 pandas = "<3"
-pyarrow = ">=4.0.0,<20"
+pyarrow = ">=4.0.0,<21"
 scikit-learn = "<2"
 scipy = "<2"
 sqlalchemy = ">=1.4.0,<3"
@@ -1362,54 +1341,56 @@ waitress = {version = "<4", markers = "platform_system == \"Windows\""}
 [package.extras]
 aliyun-oss = ["aliyunstoreplugin"]
 auth = ["Flask-WTF (<2)"]
-databricks = ["azure-storage-file-datalake (>12)", "boto3 (>1)", "botocore", "google-cloud-storage (>=1.30.0)"]
+databricks = ["azure-storage-file-datalake (>12)", "boto3 (>1)", "botocore", "databricks-agents (>=1.0.0rc3,<2.0)", "google-cloud-storage (>=1.30.0)"]
 extras = ["azureml-core (>=1.2.0)", "boto3", "botocore", "google-cloud-storage (>=1.30.0)", "kubernetes", "prometheus-flask-exporter", "pyarrow", "pysftp", "requests-auth-aws-sigv4", "virtualenv"]
 gateway = ["aiohttp (<4)", "boto3 (>=1.28.56,<2)", "fastapi (<1)", "slowapi (>=0.1.9,<1)", "tiktoken (<1)", "uvicorn[standard] (<1)", "watchfiles (<2)"]
 genai = ["aiohttp (<4)", "boto3 (>=1.28.56,<2)", "fastapi (<1)", "slowapi (>=0.1.9,<1)", "tiktoken (<1)", "uvicorn[standard] (<1)", "watchfiles (<2)"]
 jfrog = ["mlflow-jfrog-plugin"]
-langchain = ["langchain (>=0.1.0,<=0.3.14)"]
+langchain = ["langchain (>=0.1.0,<=0.3.25)"]
 mlserver = ["mlserver (>=1.2.0,!=1.3.1)", "mlserver-mlflow (>=1.2.0,!=1.3.1)"]
 sqlserver = ["mlflow-dbstore"]
 xethub = ["mlflow-xethub"]
 
 [[package]]
 name = "mlflow-skinny"
-version = "2.20.3"
+version = "3.1.0"
 description = "MLflow is an open source platform for the complete machine learning lifecycle"
 optional = false
 python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "mlflow_skinny-2.20.3-py3-none-any.whl", hash = "sha256:4cf9502bf8b7c4c971c90808560caeb2d57608354927f7b7b3150ca2c580c022"},
-    {file = "mlflow_skinny-2.20.3.tar.gz", hash = "sha256:4151f74500611f4c2ee1caf30b0108817b456654b42edbede2503dd6e845ed91"},
+    {file = "mlflow_skinny-3.1.0-py3-none-any.whl", hash = "sha256:d6221d55df49bfb9546594bad82a9608c016e71267fd9ad7bfac17ea299f327e"},
+    {file = "mlflow_skinny-3.1.0.tar.gz", hash = "sha256:20c58f89d75b2f21f09b5584ca79c715e328e35e9472b644c4ec3c80e501b2ad"},
 ]
 
 [package.dependencies]
-cachetools = ">=5.0.0,<6"
+cachetools = ">=5.0.0,<7"
 click = ">=7.0,<9"
 cloudpickle = "<4"
 databricks-sdk = ">=0.20.0,<1"
+fastapi = "<1"
 gitpython = ">=3.1.9,<4"
 importlib_metadata = ">=3.7.0,<4.7.0 || >4.7.0,<9"
 opentelemetry-api = ">=1.9.0,<3"
 opentelemetry-sdk = ">=1.9.0,<3"
-packaging = "<25"
-protobuf = ">=3.12.0,<6"
+packaging = "<26"
+protobuf = ">=3.12.0,<7"
 pydantic = ">=1.10.8,<3"
 pyyaml = ">=5.1,<7"
 requests = ">=2.17.3,<3"
 sqlparse = ">=0.4.0,<1"
 typing-extensions = ">=4.0.0,<5"
+uvicorn = "<1"
 
 [package.extras]
 aliyun-oss = ["aliyunstoreplugin"]
 auth = ["Flask-WTF (<2)"]
-databricks = ["azure-storage-file-datalake (>12)", "boto3 (>1)", "botocore", "google-cloud-storage (>=1.30.0)"]
+databricks = ["azure-storage-file-datalake (>12)", "boto3 (>1)", "botocore", "databricks-agents (>=1.0.0rc3,<2.0)", "google-cloud-storage (>=1.30.0)"]
 extras = ["azureml-core (>=1.2.0)", "boto3", "botocore", "google-cloud-storage (>=1.30.0)", "kubernetes", "prometheus-flask-exporter", "pyarrow", "pysftp", "requests-auth-aws-sigv4", "virtualenv"]
 gateway = ["aiohttp (<4)", "boto3 (>=1.28.56,<2)", "fastapi (<1)", "slowapi (>=0.1.9,<1)", "tiktoken (<1)", "uvicorn[standard] (<1)", "watchfiles (<2)"]
 genai = ["aiohttp (<4)", "boto3 (>=1.28.56,<2)", "fastapi (<1)", "slowapi (>=0.1.9,<1)", "tiktoken (<1)", "uvicorn[standard] (<1)", "watchfiles (<2)"]
 jfrog = ["mlflow-jfrog-plugin"]
-langchain = ["langchain (>=0.1.0,<=0.3.14)"]
+langchain = ["langchain (>=0.1.0,<=0.3.25)"]
 mlserver = ["mlserver (>=1.2.0,!=1.3.1)", "mlserver-mlflow (>=1.2.0,!=1.3.1)"]
 sqlserver = ["mlflow-dbstore"]
 xethub = ["mlflow-xethub"]
@@ -3332,4 +3313,4 @@ test = ["big-O", "importlib-resources ; python_version < \"3.9\"", "jaraco.funct
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.11"
-content-hash = "27ac2b7096e367ebcfefa45f5c75d044d7afa2fd3ffbbf122fc9f6b62cc3e87f"
+content-hash = "d992baad1d7c5770604803e965ad82c54775d065a506803b5803f15eb975c7b2"
