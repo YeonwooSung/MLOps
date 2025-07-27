@@ -8,9 +8,9 @@ packages = [{include = "ray_air_with_gpt_j_6b"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-torch = "^2.6.0"
+torch = "^2.7.1"
 accelerate = "^0.21.0"
-transformers = "^4.50.0"
+transformers = "^4.52.1"
 numpy = "^1.25.2"
 
 

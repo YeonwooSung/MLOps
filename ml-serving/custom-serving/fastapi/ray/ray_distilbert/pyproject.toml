@@ -10,8 +10,8 @@ packages = [{include = "ray_distilbert"}]
 python = "^3.9"
 fastapi = "^0.111.0"
 ray = {extras = ["serve"], version = "^2.44.0"}
-torch = "^2.6.0"
-transformers = "^4.51.3"
+torch = "^2.7.1"
+transformers = "^4.52.1"
 requests = "^2.31.0"
 
 
