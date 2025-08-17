@@ -10,8 +10,8 @@ packages = [{include = "ray_yolov5s"}]
 python = "^3.9"
 fastapi = "^0.111.0"
 ray = {extras = ["serve"], version = "^2.44.0"}
-requests = "^2.31.0"
-transformers = "^4.52.1"
+requests = "^2.32.4"
+transformers = "^4.53.0"
 torch = "^2.7.1"
 pillow = "^10.3.0"
 
