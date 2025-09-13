@@ -1312,14 +1312,14 @@ files = [
 
 [[package]]
 name = "mlflow"
-version = "3.1.0"
+version = "3.2.0"
 description = "MLflow is an open source platform for the complete machine learning lifecycle"
 optional = false
-python-versions = ">=3.9"
+python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "mlflow-3.1.0-py3-none-any.whl", hash = "sha256:4101d027b548afacc263b76617098454ce5281e23021bc44f11edc684495e63d"},
-    {file = "mlflow-3.1.0.tar.gz", hash = "sha256:de0b90aa058b532738081deec791bb2fca35abcca0fd9358da75fefe0a6170f4"},
+    {file = "mlflow-3.2.0-py3-none-any.whl", hash = "sha256:db97b925cc8afba15caf3749dcb4a95be83f9608e974f23253fbbc1d675247ea"},
+    {file = "mlflow-3.2.0.tar.gz", hash = "sha256:e96bd42238ea8b477691c8a8f6e8bdbf9247415ad7892e6e885994c6940bcf74"},
 ]
 
 [package.dependencies]
@@ -1329,10 +1329,11 @@ Flask = "<4"
 graphene = "<4"
 gunicorn = {version = "<24", markers = "platform_system != \"Windows\""}
 matplotlib = "<4"
-mlflow-skinny = "3.1.0"
+mlflow-skinny = "3.2.0"
+mlflow-tracing = "3.2.0"
 numpy = "<3"
 pandas = "<3"
-pyarrow = ">=4.0.0,<21"
+pyarrow = ">=4.0.0,<22"
 scikit-learn = "<2"
 scipy = "<2"
 sqlalchemy = ">=1.4.0,<3"
@@ -1341,26 +1342,26 @@ waitress = {version = "<4", markers = "platform_system == \"Windows\""}
 [package.extras]
 aliyun-oss = ["aliyunstoreplugin"]
 auth = ["Flask-WTF (<2)"]
-databricks = ["azure-storage-file-datalake (>12)", "boto3 (>1)", "botocore", "databricks-agents (>=1.0.0rc3,<2.0)", "google-cloud-storage (>=1.30.0)"]
+databricks = ["azure-storage-file-datalake (>12)", "boto3 (>1)", "botocore", "databricks-agents (>=1.2.0,<2.0)", "google-cloud-storage (>=1.30.0)"]
 extras = ["azureml-core (>=1.2.0)", "boto3", "botocore", "google-cloud-storage (>=1.30.0)", "kubernetes", "prometheus-flask-exporter", "pyarrow", "pysftp", "requests-auth-aws-sigv4", "virtualenv"]
 gateway = ["aiohttp (<4)", "boto3 (>=1.28.56,<2)", "fastapi (<1)", "slowapi (>=0.1.9,<1)", "tiktoken (<1)", "uvicorn[standard] (<1)", "watchfiles (<2)"]
 genai = ["aiohttp (<4)", "boto3 (>=1.28.56,<2)", "fastapi (<1)", "slowapi (>=0.1.9,<1)", "tiktoken (<1)", "uvicorn[standard] (<1)", "watchfiles (<2)"]
 jfrog = ["mlflow-jfrog-plugin"]
-langchain = ["langchain (>=0.1.0,<=0.3.25)"]
-mlserver = ["mlserver (>=1.2.0,!=1.3.1)", "mlserver-mlflow (>=1.2.0,!=1.3.1)"]
+langchain = ["langchain (>=0.1.0,<=0.3.27)"]
+mlserver = ["mlserver (>=1.2.0,!=1.3.1,<2.0.0)", "mlserver-mlflow (>=1.2.0,!=1.3.1,<2.0.0)"]
 sqlserver = ["mlflow-dbstore"]
 xethub = ["mlflow-xethub"]
 
 [[package]]
 name = "mlflow-skinny"
-version = "3.1.0"
+version = "3.2.0"
 description = "MLflow is an open source platform for the complete machine learning lifecycle"
 optional = false
-python-versions = ">=3.9"
+python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "mlflow_skinny-3.1.0-py3-none-any.whl", hash = "sha256:d6221d55df49bfb9546594bad82a9608c016e71267fd9ad7bfac17ea299f327e"},
-    {file = "mlflow_skinny-3.1.0.tar.gz", hash = "sha256:20c58f89d75b2f21f09b5584ca79c715e328e35e9472b644c4ec3c80e501b2ad"},
+    {file = "mlflow_skinny-3.2.0-py3-none-any.whl", hash = "sha256:ec33a6fc164973e3b4d208e4ab8bec118ea93ff890ffbd08817b66468235ed71"},
+    {file = "mlflow_skinny-3.2.0.tar.gz", hash = "sha256:b359ec082a0a966e4e8e80f03d850da7fa677ebe57e67b1c0877029e5eeee443"},
 ]
 
 [package.dependencies]
@@ -1385,15 +1386,36 @@ uvicorn = "<1"
 [package.extras]
 aliyun-oss = ["aliyunstoreplugin"]
 auth = ["Flask-WTF (<2)"]
-databricks = ["azure-storage-file-datalake (>12)", "boto3 (>1)", "botocore", "databricks-agents (>=1.0.0rc3,<2.0)", "google-cloud-storage (>=1.30.0)"]
+databricks = ["azure-storage-file-datalake (>12)", "boto3 (>1)", "botocore", "databricks-agents (>=1.2.0,<2.0)", "google-cloud-storage (>=1.30.0)"]
 extras = ["azureml-core (>=1.2.0)", "boto3", "botocore", "google-cloud-storage (>=1.30.0)", "kubernetes", "prometheus-flask-exporter", "pyarrow", "pysftp", "requests-auth-aws-sigv4", "virtualenv"]
 gateway = ["aiohttp (<4)", "boto3 (>=1.28.56,<2)", "fastapi (<1)", "slowapi (>=0.1.9,<1)", "tiktoken (<1)", "uvicorn[standard] (<1)", "watchfiles (<2)"]
 genai = ["aiohttp (<4)", "boto3 (>=1.28.56,<2)", "fastapi (<1)", "slowapi (>=0.1.9,<1)", "tiktoken (<1)", "uvicorn[standard] (<1)", "watchfiles (<2)"]
 jfrog = ["mlflow-jfrog-plugin"]
-langchain = ["langchain (>=0.1.0,<=0.3.25)"]
-mlserver = ["mlserver (>=1.2.0,!=1.3.1)", "mlserver-mlflow (>=1.2.0,!=1.3.1)"]
+langchain = ["langchain (>=0.1.0,<=0.3.27)"]
+mlserver = ["mlserver (>=1.2.0,!=1.3.1,<2.0.0)", "mlserver-mlflow (>=1.2.0,!=1.3.1,<2.0.0)"]
 sqlserver = ["mlflow-dbstore"]
 xethub = ["mlflow-xethub"]
+
+[[package]]
+name = "mlflow-tracing"
+version = "3.2.0"
+description = "MLflow Tracing SDK is an open-source, lightweight Python package that only includes the minimum set of dependencies and functionality to instrument your code/models/agents with MLflow Tracing."
+optional = false
+python-versions = ">=3.10"
+groups = ["main"]
+files = [
+    {file = "mlflow_tracing-3.2.0-py3-none-any.whl", hash = "sha256:4180d48b6b68a70b3e37987def3b0689d3f4ba722f5d2b98344c3717d2289b99"},
+    {file = "mlflow_tracing-3.2.0.tar.gz", hash = "sha256:6f3dd940752ca28871b09880e9426d1293460822faa8706b33af1d50c29a0355"},
+]
+
+[package.dependencies]
+cachetools = ">=5.0.0,<7"
+databricks-sdk = ">=0.20.0,<1"
+opentelemetry-api = ">=1.9.0,<3"
+opentelemetry-sdk = ">=1.9.0,<3"
+packaging = "<26"
+protobuf = ">=3.12.0,<7"
+pydantic = ">=1.10.8,<3"
 
 [[package]]
 name = "numpy"
@@ -3313,4 +3335,4 @@ test = ["big-O", "importlib-resources ; python_version < \"3.9\"", "jaraco.funct
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.11"
-content-hash = "d992baad1d7c5770604803e965ad82c54775d065a506803b5803f15eb975c7b2"
+content-hash = "f3f218b577b3fcb9f9d95a4fec5f40745379db5a9e8bdf82c7541c3022161367"
