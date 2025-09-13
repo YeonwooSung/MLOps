@@ -9,7 +9,7 @@ packages = [{include = "zerocopy_loading"}]
 [tool.poetry.dependencies]
 python = "^3.10"
 torch = "^2.7.1"
-transformers = "^4.54.0"
+transformers = "^4.55.2"
 ray = "^2.44.0"
 zerocopy = "^0.1.0"
 
