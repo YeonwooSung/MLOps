@@ -10,7 +10,7 @@ packages = [{include = "zerocopy_loading"}]
 python = "^3.10"
 torch = "^2.7.1"
 transformers = "^4.56.1"
-ray = "^2.44.0"
+ray = "^2.54.0"
 zerocopy = "^0.1.0"
 
 
