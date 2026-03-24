@@ -13,7 +13,7 @@ ray = {extras = ["serve"], version = "^2.44.0"}
 requests = "^2.32.4"
 transformers = "^4.53.0"
 torch = "^2.7.1"
-pillow = "^10.3.0"
+pillow = "^11.3.0"
 
 
 [build-system]
