@@ -11,7 +11,7 @@ opensearch-py==2.4.2
 PyMySQL==1.1.0
 python-dotenv~=1.0.0
 plotly~=5.18.0
-cryptography==44.0.1
+cryptography==46.0.6
 langchain~=0.1.11
-langchain-core~=0.1.30
+langchain-core~=1.2.24
 sqlparse~=0.4.2
