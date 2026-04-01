@@ -96,7 +96,7 @@ ujson = "==5.8.0"
 apify-client = "==1.4.1"
 apify-shared = "==1.0.2"
 joblib = "==1.4.2"
-nltk = "==3.8.2"
+nltk = "==3.9.4"
 
 
 [tool.poetry.group.dev.dependencies]
